@@ -19,7 +19,8 @@ public class Main {
 
 	private static String filename = "newcalendar.ics";
 	private static ArrayList<ArrayList<String>> events = new ArrayList<ArrayList<String>>();
-
+	private static Scanner userInput = new Scanner(System.in);
+	
 	/**
 	 * main
 	 * 
@@ -44,9 +45,8 @@ public class Main {
 		boolean exit = false;
 
 		while (!exit) {
-			//Scanner getInput = new Scanner(System.in);
 			int choice = 0;
-			// print choices here
+
 			System.out.println("There are now ( " + events.size() + " ) events queued.");
 			System.out.println("Events will be written to \"" + filename + "\".");
 			System.out.println("(1) Change the name of your save file");
@@ -55,7 +55,7 @@ public class Main {
 			System.out.println("(4) Exit");
 			System.out.print(": ");
 
-			//choice = getInput.nextInt();
+			choice = getChoice();
 			// throws an InputMismatchException when anything other than a
 			// number is given
 
@@ -85,10 +85,15 @@ public class Main {
 		}
 	}
 
+	/**
+	 * getChoice
+	 * 
+	 * @return
+	 */
 	public static int getChoice() {
-		Scanner getInput = new Scanner(System.in);
+		int input = Integer.parseInt(userInput.nextLine());
 		
-		return 0;
+		return input;
 	}
 	
 	/**
@@ -101,19 +106,19 @@ public class Main {
 		Calendar cal = Calendar.getInstance();
 		Date date = new Date();
 
-		System.out.println(cal.toString());
+		//System.out.println(cal.toString());
 
 		SimpleDateFormat dateFormat = new SimpleDateFormat("YYYYMMdd");
 		SimpleDateFormat timeFormat = new SimpleDateFormat("HHmmss");
 
-		ArrayList<String> x = getEventDetails();
+		ArrayList<String> input = getEventDetails();
 		
 		// TODO Replace with editable values
-		String description = "This is a test event";
-		String location = "Hamilton Library";
-		String summary = "Study for exam";
-		String date_start = "20160201T230000Z";
-		String date_end = "20160101T000001Z";
+		String description = input.get(6);
+		String location = input.get(5);
+		String summary = input.get(0);
+		String date_start = input.get(1) + "T" + input.get(2) + "Z";
+		String date_end = input.get(3) + "T" + input.get(4) + "Z";
 		String date_stamp = dateFormat.format(date) + "T" + timeFormat.format(date) + "Z";
 		String date_created = dateFormat.format(date) + "T" + timeFormat.format(date) + "Z";
 		String date_modified = dateFormat.format(date) + "T" + timeFormat.format(date) + "Z";
@@ -175,10 +180,8 @@ public class Main {
 		}
 		buffer.add("END:VCALENDAR" + "\n");
 
+		System.out.println("Buffer of output to be saved:");
 		System.out.println(buffer);
-		// System.out.println("DEBUG: toFile called!");
-
-		/* System.out.println(input); */
 
 		try {
 			PrintWriter output = new PrintWriter(filename);
@@ -192,16 +195,38 @@ public class Main {
 	}
 
 	/**
-	 * Asks the user for input on
+	 * Queries the user for details on a created event, and returns an array of answers
 	 * 
 	 * @return an ArrayList of user input
 	 */
 	private static ArrayList<String> getEventDetails() {
-		ArrayList results = new ArrayList<String>();
+		ArrayList<String> answers = new ArrayList<String>();
 
-		// questions are asked to the user here
+		// the user is asked questions here
+		System.out.print("Event Name: ");
+		answers.add(userInput.nextLine());
+		
+		System.out.print("Start Date (YYYYMMDD): ");
+		answers.add(userInput.nextLine());
+		
+		System.out.print("Start Time (HHMMSS): ");
+		answers.add(userInput.nextLine());
+		
+		System.out.print("End Date (YYYYMMDD): ");
+		answers.add(userInput.nextLine());
+		
+		System.out.print("End Time (HHMMSS): ");
+		answers.add(userInput.nextLine());
+		
+		System.out.print("Location: ");
+		answers.add(userInput.nextLine());
+		
+		System.out.print("Description: ");
+		answers.add(userInput.nextLine());
 
-		return results;
+		//System.out.println(answers.toString());
+		
+		return answers;
 	}
 
 	// TODO add a menu where users can choose to add multiple events before
