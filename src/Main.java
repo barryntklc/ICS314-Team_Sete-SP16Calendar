@@ -1,7 +1,10 @@
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+<<<<<<< HEAD
 import java.util.Scanner;
+=======
+import java.util.ArrayList;
+>>>>>>> origin/master
 
 /**
  * Main
@@ -71,7 +74,10 @@ public class Main {
 		String description = "This is a test event";
 		String location = "Hamilton Library";
 		String summary = "Study for exam";
+<<<<<<< HEAD
 		
+=======
+>>>>>>> origin/master
 		String date_start = "20160201T230000Z";
 		String date_end = "20160101T000001Z";
 		String date_stamp = "20160223T032827Z";
@@ -88,21 +94,21 @@ public class Main {
 		output = output + "X-WR-CALNAME:" + calendar_name + "\n";
 		output = output + "X-WR-TIMEZONE:Pacific/Honolulu" + "\n"; //timezone
 		output = output + "X-WR-CALDESC:" + "\n";
-		output = output + "BEGIN:VEVENT" + "\n";
 		
-		output = output + "DTSTART:" + date_start + "\n"; //TODO make custom timestamp
-		output = output + "DTEND:" + date_end + "\n"; //TODO make custom timestamp
-		output = output + "DTSTAMP:" + date_stamp + "\n"; //TODO make custom timestamp
+		//TODO make DTSTART, DTEND, DTSTAMP, CREATED, and LAST-MODIFIED customizable by the user
+		output = output + "BEGIN:VEVENT" + "\n";
+		output = output + "DTSTART:" + date_start + "\n";
+		output = output + "DTEND:" + date_end + "\n";
+		output = output + "DTSTAMP:" + date_stamp + "\n";
 		output = output + "UID:rhh4l2hdp1snqc7ego4lueh18c@google.com" + "\n";
-		output = output + "CREATED:" + date_created + "\n"; //TODO make custom timestamp
+		output = output + "CREATED:" + date_created + "\n";
 		output = output + "DESCRIPTION:" + description + "\n";
-		output = output + "LAST-MODIFIED:" + date_modified + "\n"; //TODO make custom timestamp
+		output = output + "LAST-MODIFIED:" + date_modified + "\n";
 		output = output + "LOCATION:" + location + "\n";
 		output = output + "SEQUENCE:1" + "\n";
 		output = output + "STATUS:CONFIRMED" + "\n";
 		output = output + "SUMMARY:" + summary + "\n";
 		output = output + "TRANSP:TRANSPARENT" + "\n";
-		
 		output = output + "END:VEVENT" + "\n";
 		
 		output = output + "END:VCALENDAR" + "\n";
@@ -125,4 +131,18 @@ public class Main {
 			System.out.println("ERROR: The file was not found.");
 		}
 	}
+	
+	/**
+	 * Asks the user for input on 
+	 * @return an ArrayList of user input
+	 */
+	private static ArrayList<String> getDetails() {
+		ArrayList results = new ArrayList<String>();
+		
+		//questions are asked to the user here
+		
+		return results;
+	}
+	
+	//TODO add a menu where users can choose to add multiple events before quitting.
 }
