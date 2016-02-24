@@ -39,38 +39,43 @@ public class Main {
 	 * mainMenu
 	 */
 	public static void mainMenu() {
-		
+		System.out.println("Welcome to Calendar_IO! (Team Sete)");
+
 		boolean exit = false;
-		Scanner getInput = new Scanner(System.in);
 
 		while (!exit) {
+			//Scanner getInput = new Scanner(System.in);
 			int choice = 0;
 			// print choices here
 			System.out.println("There are now ( " + events.size() + " ) events queued.");
 			System.out.println("Events will be written to \"" + filename + "\".");
 			System.out.println("(1) Change the name of your save file");
 			System.out.println("(2) Add a new event");
-			System.out.println("(3) Exit");
+			System.out.println("(3) List all events");
+			System.out.println("(4) Exit");
 			System.out.print(": ");
 
-			choice = getInput.nextInt();
+			//choice = getInput.nextInt();
 			// throws an InputMismatchException when anything other than a
 			// number is given
 
 			System.out.println();
-			if (choice == 1) { //change save file
+			if (choice == 1) { // change save file
 				// change filename
 				System.out.println("Changing the name of the save file...");
-				filename = getInput.nextLine();
+				//filename = getInput.nextLine();
 				if (filename == "" || filename == "\n") {
 					filename = "newcalendar.ics";
 				}
 				// System.out.println("Save file name changed to \"" +
 				// "\".");
-			} else if (choice == 2) { //add event
+			} else if (choice == 2) { // add event
 				System.out.println("Creating an event...");
 				addEvent();
-			} else if (choice == 3) { //exit
+			} else if (choice == 3) { // list all
+				System.out.println("Listing all recorded events...");
+				listEvents();
+			} else if (choice == 4) { // exit
 				System.out.println("Exiting Calendar_IO");
 				saveFile();
 				exit = true;
@@ -80,6 +85,12 @@ public class Main {
 		}
 	}
 
+	public static int getChoice() {
+		Scanner getInput = new Scanner(System.in);
+		
+		return 0;
+	}
+	
 	/**
 	 * addEvent
 	 * 
@@ -89,12 +100,14 @@ public class Main {
 		ArrayList<String> details = new ArrayList<String>();
 		Calendar cal = Calendar.getInstance();
 		Date date = new Date();
-		
+
 		System.out.println(cal.toString());
-		
+
 		SimpleDateFormat dateFormat = new SimpleDateFormat("YYYYMMdd");
 		SimpleDateFormat timeFormat = new SimpleDateFormat("HHmmss");
 
+		ArrayList<String> x = getEventDetails();
+		
 		// TODO Replace with editable values
 		String description = "This is a test event";
 		String location = "Hamilton Library";
@@ -110,8 +123,9 @@ public class Main {
 		details.add("DTSTART:" + date_start + "\n");
 		details.add("DTEND:" + date_end + "\n");
 		details.add("DTSTAMP:" + date_stamp + "\n");
-		//UID is not needed unless you want to give the event a unique identifier
-		//details.add("UID:rhh4l2hdp1snqc7ego4lueh18c@google.com" + "\n");
+		// UID is not needed unless you want to give the event a unique
+		// identifier
+		// details.add("UID:rhh4l2hdp1snqc7ego4lueh18c@google.com" + "\n");
 		details.add("CREATED:" + date_created + "\n");
 		details.add("DESCRIPTION:" + description + "\n");
 		details.add("LAST-MODIFIED:" + date_modified + "\n");
@@ -121,8 +135,21 @@ public class Main {
 		details.add("SUMMARY:" + summary + "\n");
 		details.add("TRANSP:TRANSPARENT" + "\n");
 		details.add("END:VEVENT" + "\n");
-		
+
 		events.add(details);
+	}
+
+	public static void listEvents() {
+		for (int h = 0; h < events.size(); h++) {
+			System.out.println("____________________________________________________");
+			System.out.println("\"" + events.get(h).get(10).substring(8, events.get(h).get(10).length() - 1) + "\" - "
+					+ events.get(h).get(4).substring(8, events.get(h).get(4).length() - 1));
+			System.out.println(events.get(h).get(1).substring(8, events.get(h).get(1).length() - 1) + " ==> "
+					+ events.get(h).get(2).substring(8, events.get(h).get(2).length() - 1) + "\n");
+			System.out.println(events.get(h).get(7).substring(0, events.get(h).get(7).length() - 1));
+			System.out.println(events.get(h).get(5).substring(0, events.get(h).get(5).length() - 1));
+		}
+		System.out.println("____________________________________________________" + "\n");
 	}
 
 	/**
@@ -131,7 +158,7 @@ public class Main {
 	private static void saveFile() {
 		ArrayList<String> buffer = new ArrayList<String>();
 		String calendar_name = "TESTIMPORT";
-		
+
 		buffer.add("BEGIN:VCALENDAR" + "\n");
 		buffer.add("PRODID:-//Google Inc//Google Calendar 70.9054//EN" + "\n");
 		buffer.add("VERSION:2.0" + "\n");
@@ -140,18 +167,18 @@ public class Main {
 		buffer.add("X-WR-CALNAME:" + calendar_name + "\n");
 		buffer.add("X-WR-TIMEZONE:Pacific/Honolulu" + "\n");
 		buffer.add("X-WR-CALDESC:" + "\n");
-		
+
 		for (int h = 0; h < events.size(); h++) {
 			for (int i = 0; i < events.get(h).size(); i++) {
 				buffer.add(events.get(h).get(i));
 			}
 		}
 		buffer.add("END:VCALENDAR" + "\n");
-		
+
 		System.out.println(buffer);
-		//System.out.println("DEBUG: toFile called!");
-		
-		/*System.out.println(input);*/
+		// System.out.println("DEBUG: toFile called!");
+
+		/* System.out.println(input); */
 
 		try {
 			PrintWriter output = new PrintWriter(filename);
@@ -169,7 +196,7 @@ public class Main {
 	 * 
 	 * @return an ArrayList of user input
 	 */
-	private static ArrayList<String> getDetails() {
+	private static ArrayList<String> getEventDetails() {
 		ArrayList results = new ArrayList<String>();
 
 		// questions are asked to the user here
