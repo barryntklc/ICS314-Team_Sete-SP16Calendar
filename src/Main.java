@@ -1,10 +1,10 @@
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.InputMismatchException;
 
 /**
  * Main
@@ -58,7 +58,7 @@ public class Main {
 			// number is given
 
 			System.out.println();
-			if (choice == 1) {
+			if (choice == 1) { //change save file
 				// change filename
 				System.out.println("Changing the name of the save file...");
 				filename = getInput.nextLine();
@@ -67,13 +67,10 @@ public class Main {
 				}
 				// System.out.println("Save file name changed to \"" +
 				// "\".");
-			} else if (choice == 2) {
-				// add an event
+			} else if (choice == 2) { //add event
 				System.out.println("Creating an event...");
 				addEvent();
-				//System.out.println(events);
-			} else if (choice == 3) {
-				// exit
+			} else if (choice == 3) { //exit
 				System.out.println("Exiting Calendar_IO");
 				saveFile();
 				exit = true;
@@ -90,11 +87,13 @@ public class Main {
 	 */
 	public static void addEvent() {
 		ArrayList<String> details = new ArrayList<String>();
-		//Calendar cal = new Calendar();
+		Calendar cal = Calendar.getInstance();
+		Date date = new Date();
 		
-		//System.out.println(today.getYear());
-		//System.out.println(today.getMonth());
-		//System.out.println(today.getDay());
+		System.out.println(cal.toString());
+		
+		SimpleDateFormat dateFormat = new SimpleDateFormat("YYYYMMdd");
+		SimpleDateFormat timeFormat = new SimpleDateFormat("HHmmss");
 
 		// TODO Replace with editable values
 		String description = "This is a test event";
@@ -102,14 +101,11 @@ public class Main {
 		String summary = "Study for exam";
 		String date_start = "20160201T230000Z";
 		String date_end = "20160101T000001Z";
-		String date_stamp = "20160223T032827Z";
-		String date_created = "20160223T032617Z";
-		String date_modified = "20160223T032739Z";
+		String date_stamp = dateFormat.format(date) + "T" + timeFormat.format(date) + "Z";
+		String date_created = dateFormat.format(date) + "T" + timeFormat.format(date) + "Z";
+		String date_modified = dateFormat.format(date) + "T" + timeFormat.format(date) + "Z";
 
-		String output = "";
-
-		// TODO make DTSTART, DTEND, DTSTAMP, CREATED, and LAST-MODIFIED
-		// customizable by the user
+		// TODO make DTSTART, DTEND customizable by the user
 		details.add("BEGIN:VEVENT" + "\n");
 		details.add("DTSTART:" + date_start + "\n");
 		details.add("DTEND:" + date_end + "\n");
@@ -125,17 +121,6 @@ public class Main {
 		details.add("SUMMARY:" + summary + "\n");
 		details.add("TRANSP:TRANSPARENT" + "\n");
 		details.add("END:VEVENT" + "\n");
-
-		//ideally, instead of calling this method here, the strings would be pushed to an ArrayList
-		//then VCALENDAR details would be appended to the beginning and end of the strings before output.
-		
-		//for (int i = 0; i < details.size(); i++)
-		//	output = output + details.get(i);
-		
-		//System.out.println(details);
-		//System.out.println(output);
-		
-		//toFile(output);
 		
 		events.add(details);
 	}
