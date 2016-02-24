@@ -1,6 +1,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.util.Scanner;
 
 /**
  * Main
@@ -13,6 +14,8 @@ import java.io.PrintWriter;
  */
 public class Main {
 
+	private static String filename = "newcalendar.ics";
+	
 	/**
 	 * main
 	 * 
@@ -21,15 +24,54 @@ public class Main {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		if (args.length == 1) {
+			filename = args[0];
+		}
+		
+		mainMenu();
+	}
 
-		System.out.println("test");
-
+	/**
+	 * 
+	 */
+	public static void mainMenu() {
+		boolean exit = false;
+		Scanner getInput = new Scanner(System.in);
+		
+		while (!exit) {
+			int choice = 0;
+			//print choices here
+			System.out.println("(1) Change the name of your save file");
+			System.out.println("(2) Add a new save file");
+			System.out.println("(3) Exit");
+			System.out.print(": ");
+			
+			choice = getInput.nextInt();
+			//throws an InputMismatchException when anthing other than a number is given
+			
+			if (choice == 1) {
+				//change filename
+				System.out.println("Changing the name of the save file...");
+			} else if (choice == 2) {
+				//add an event
+				System.out.println("Creating an event...");
+			} else if (choice == 3) {
+				//exit
+				System.out.println("Exiting Calendar_IO");
+				exit = true;
+			} else {
+				System.out.println("ERROR: Invalid choice!");
+			}
+		}
+		
+		
 		String calendar_name = "TESTIMPORT";
+		
+		//TODO Replace with editable values
 		String description = "This is a test event";
 		String location = "Hamilton Library";
 		String summary = "Study for exam";
 		
-		//TODO Replace with editable values
 		String date_start = "20160201T230000Z";
 		String date_end = "20160101T000001Z";
 		String date_stamp = "20160223T032827Z";
@@ -67,7 +109,7 @@ public class Main {
 
 		toFile(output);
 	}
-
+	
 	/**
 	 * Writes given text that prints calendar data to a file here.
 	 */
@@ -76,7 +118,7 @@ public class Main {
 		System.out.println(input);
 		
 		try {
-			PrintWriter output = new PrintWriter("newfile.ics");
+			PrintWriter output = new PrintWriter(filename);
 			output.write(input);
 			output.close();
 		} catch (FileNotFoundException e) {
