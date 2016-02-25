@@ -8,7 +8,6 @@ import java.util.Date;
 
 /**
  * Main
- * BLEHEHEHEHEHHE
  * Main class for Calendar_IO
  * 
  * @author Wing Yiu Ng
