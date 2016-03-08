@@ -113,7 +113,7 @@ public class Main {
 		ArrayList<String> input = getEventDetails();
 		
 		// TODO Replace with editable values
-		String description = input.get(6);
+		String description = input.get(9);
 		String location = input.get(5);
 		String summary = input.get(0);
 		String date_start = input.get(1) + "T" + input.get(2) + "Z";
@@ -121,6 +121,9 @@ public class Main {
 		String date_stamp = dateFormat.format(date) + "T" + timeFormat.format(date) + "Z";
 		String date_created = dateFormat.format(date) + "T" + timeFormat.format(date) + "Z";
 		String date_modified = dateFormat.format(date) + "T" + timeFormat.format(date) + "Z";
+		String classification = input.get(8);
+		String latitude = input.get(6);
+		String longitude = input.get(7);
 
 		// TODO make DTSTART, DTEND customizable by the user
 		details.add("BEGIN:VEVENT" + "\n");
@@ -134,6 +137,8 @@ public class Main {
 		details.add("DESCRIPTION:" + description + "\n");
 		details.add("LAST-MODIFIED:" + date_modified + "\n");
 		details.add("LOCATION:" + location + "\n");
+		details.add("GEO:" + latitude + ", " + longitude + "\n");
+		details.add("CLASS:" + classification + "\n");
 		details.add("SEQUENCE:1" + "\n");
 		details.add("STATUS:CONFIRMED" + "\n");
 		details.add("SUMMARY:" + summary + "\n");
@@ -218,6 +223,16 @@ public class Main {
 		answers.add(userInput.nextLine());
 		
 		System.out.print("Location: ");
+		answers.add(userInput.nextLine());
+		
+		System.out.print("Latitude (-90 to 90)");
+		answers.add(userInput.nextLine());
+		
+		System.out.print("Longiutude (-180 to 180)");
+		answers.add(userInput.nextLine());
+		
+		System.out.print("Classification (PUBLIC is Default) \n"
+				+ "(PUBLIC, PRIVATE, CONFIDENTIAL, iana-token,x-name):");
 		answers.add(userInput.nextLine());
 		
 		System.out.print("Description: ");
