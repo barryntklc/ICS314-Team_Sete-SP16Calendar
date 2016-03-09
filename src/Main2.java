@@ -62,8 +62,8 @@ public class Main2 {
 			System.out.println();
 			if (choice == 1) { // change save file
 				// change filename
-				System.out.println("Changing the name of the save file...");
-				//filename = getInput.nextLine();
+				System.out.println("New filename: ");
+				filename = userInput.nextLine();
 				if (filename == "" || filename == "\n") {
 					filename = "newcalendar.ics";
 				}
