@@ -13,10 +13,10 @@ public class Event {
 	private String date_end;
 	private String time_start;
 	private String time_end;
-	//private String date_stamp;
+	private String date_stamp;
 	private String description;
 	private String classification;
-	//private static String date_created;
+	private static String date_created;
 	private String location;
 	private float longitude, latitude;		// Geographic location
 	private String file_name;
