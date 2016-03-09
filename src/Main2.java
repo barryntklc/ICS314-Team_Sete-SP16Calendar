@@ -63,8 +63,8 @@ public class Main2 {
 			System.out.println();
 			if (choice == 1) { // change save file
 				// change filename
-				System.out.println("Changing the name of the save file...");
-				//filename = getInput.nextLine();
+				System.out.println("New filename: ");
+				filename = userInput.nextLine() + ".ics";
 				if (filename == "" || filename == "\n") {
 					filename = "newcalendar.ics";
 				}
@@ -93,6 +93,7 @@ public class Main2 {
 	 */
 	public static int getChoice() {
 		String inputS = (userInput.nextLine());
+		if(inputS.isEmpty()) return -2;
 		int input;
 		try
 		{
@@ -101,7 +102,6 @@ public class Main2 {
 		{
 		   return -1;
 		}
-		
 		return input;
 	}
 	
@@ -289,17 +289,20 @@ public class Main2 {
 		}
 		else System.out.println("No geographic location entered");
 		
-		System.out.print("Classification (PUBLIC is Default) \n");
+		System.out.print("Classification (Default is PUBLIC) \n");
 		System.out.print("(1)PUBLIC, (2)PRIVATE, (3)CONFIDENTIAL, (4)iana-token, (5)x-name: ");
 		String[] classifications = {"PUBLIC", "PRIVATE", "CONFIDENTIAL", "iana-token", "x-name"};
 		int class_choice = 0;
 		class_choice = getChoice();
-		while(class_choice>5 || class_choice<1)  {
+		while((class_choice!=-2)&&(class_choice>5||class_choice<1))  {
 			System.out.print("(1)PUBLIC, (2)PRIVATE, (3)CONFIDENTIAL, (4)iana-token, (5)x-name: \n");
 			System.out.print("Please enter a number from the list above: ");
 			class_choice = getChoice();
 		}
-		new_event.setClassification(classifications[class_choice-1]);
+		if(class_choice==-2)
+			new_event.setClassification("PUBLIC");
+		else
+			new_event.setClassification(classifications[class_choice-1]);
 		
 		System.out.print("Description: ");
 		new_event.setDescription(userInput.nextLine());
