@@ -62,8 +62,7 @@ public class Main {
 			if (choice == 1) { // change save file
 				// change filename
 				System.out.println("Changing the name of the save file...");
-				System.out.print("Please enter a filename: ");
-				filename = userInput.nextLine();
+				//filename = getInput.nextLine();
 				if (filename == "" || filename == "\n") {
 					filename = "newcalendar.ics";
 				}
@@ -117,11 +116,11 @@ public class Main {
 		String description = input.get(9);
 		String location = input.get(5);
 		String summary = input.get(0);
-		String date_start = input.get(1) + "T" + input.get(2);
-		String date_end = input.get(3) + "T" + input.get(4);
-		String date_stamp = dateFormat.format(date) + "T" + timeFormat.format(date);
-		String date_created = dateFormat.format(date) + "T" + timeFormat.format(date);
-		String date_modified = dateFormat.format(date) + "T" + timeFormat.format(date);
+		String date_start = input.get(1) + "T" + input.get(2) + "Z";
+		String date_end = input.get(3) + "T" + input.get(4) + "Z";
+		String date_stamp = dateFormat.format(date) + "T" + timeFormat.format(date) + "Z";
+		String date_created = dateFormat.format(date) + "T" + timeFormat.format(date) + "Z";
+		String date_modified = dateFormat.format(date) + "T" + timeFormat.format(date) + "Z";
 		String classification = input.get(8);
 		String latitude = input.get(6);
 		String longitude = input.get(7);
@@ -226,14 +225,14 @@ public class Main {
 		System.out.print("Location: ");
 		answers.add(userInput.nextLine());
 		
-		System.out.print("Latitude (-90 to 90): ");
+		System.out.print("Latitude (-90 to 90)");
 		answers.add(userInput.nextLine());
 		
-		System.out.print("Longiutude (-180 to 180): ");
+		System.out.print("Longiutude (-180 to 180)");
 		answers.add(userInput.nextLine());
 		
 		System.out.print("Classification (PUBLIC is Default) \n"
-				+ "(PUBLIC, PRIVATE, CONFIDENTIAL, iana-token, x-name): ");
+				+ "(PUBLIC, PRIVATE, CONFIDENTIAL, iana-token,x-name):");
 		answers.add(userInput.nextLine());
 		
 		System.out.print("Description: ");

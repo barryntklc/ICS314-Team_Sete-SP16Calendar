@@ -1,5 +1,6 @@
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Scanner;
@@ -112,7 +113,7 @@ public class Main2 {
 	public static void addEvent() {
 		ArrayList<String> details = new ArrayList<String>();
 		Event new_event = new Event();
-		Calendar cal = Calendar.getInstance();
+		//Calendar cal = Calendar.getInstance();
 		Date date = new Date();
 
 		//System.out.println(cal.toString());
@@ -228,35 +229,65 @@ public class Main2 {
 		new_event.setTitle(userInput.nextLine());
 		
 		System.out.print("Start Date (YYYYMMDD): ");
-		new_event.setDateStart(userInput.nextLine());
+		String startDateInput = userInput.nextLine();
+		while(!isValidDate(startDateInput)) {
+			System.out.print("Incorrect Date! Please enter in the format YYYYMMDD: ");
+			startDateInput = userInput.nextLine();
+		}
+		new_event.setDateStart(startDateInput);
 		
 		System.out.print("Start Time (HHMMSS): ");
-		new_event.setTimeStart(userInput.nextLine());
+		String startTimeInput = userInput.nextLine();
+		while(!isValidTime(startTimeInput)) {
+			System.out.print("Incorrect Time! Please enter in the format HHMMSS: ");
+			startTimeInput = userInput.nextLine();
+		}
+		new_event.setTimeStart(startTimeInput);
 		
 		System.out.print("End Date (YYYYMMDD): ");
-		new_event.setDateEnd(userInput.nextLine());
+		String endDateInput = userInput.nextLine();
+		while(!isValidDate(endDateInput)) {
+			System.out.print("Incorrect Date! Please enter in the format YYYYMMDD: ");
+			endDateInput = userInput.nextLine();
+		}
+		new_event.setDateEnd(endDateInput);
 		
 		System.out.print("End Time (HHMMSS): ");
-		new_event.setTimeEnd(userInput.nextLine());
+		String endTimeInput = userInput.nextLine();
+		while(!isValidTime(endTimeInput)) {
+			System.out.print("Incorrect Time! Please enter in the format HHMMSS: ");
+			endTimeInput = userInput.nextLine();
+		}
+		new_event.setTimeEnd(endTimeInput);
 		
 		System.out.print("Location: ");
 		new_event.setLocation(userInput.nextLine());
 		
-		System.out.print("Latitude (-90 to 90): ");
-		String lat_input = userInput.nextLine();
-		while(Float.parseFloat(lat_input)>90 || Float.parseFloat(lat_input)<-90) {
-			System.out.print("Please enter a number between -90 and 90: ");
-			lat_input = userInput.nextLine();
+		System.out.println("Would you like to enter the latitude and longitude (y/n): ");
+		String geo_choice = userInput.nextLine();
+		while(geo_choice.charAt(0)!='y' && geo_choice.charAt(0)!='Y' 
+				&& geo_choice.charAt(0)!='n' && geo_choice.charAt(0)!='N' ) {
+			System.out.println("Please enter y or n: ");
+			geo_choice = userInput.nextLine();
 		}
-		new_event.setLatitude(Float.parseFloat(lat_input));
-		
-		System.out.print("Longiutude (-180 to 180): ");
-		String lon_input = userInput.nextLine();
-		while(Float.parseFloat(lon_input)>180 || Float.parseFloat(lon_input)<-180) {
-			System.out.print("Please enter a number between -180 and 180: ");
-			lon_input = userInput.nextLine();
+		if(geo_choice.charAt(0) == 'Y' || geo_choice.charAt(0) == 'y'){
+			System.out.print("Latitude (-90 to 90): ");
+			String lat_input = userInput.nextLine();
+			while(!isFloat(lat_input)||Float.parseFloat(lat_input)>90||Float.parseFloat(lat_input)<-90) {
+				System.out.print("Please enter a decimal between -90 and 90: ");
+				lat_input = userInput.nextLine();
+			}
+			new_event.setLatitude(Float.parseFloat(lat_input));
+			
+			System.out.print("Longiutude (-180 to 180): ");
+			String lon_input = userInput.nextLine();
+			while(!isFloat(lon_input)||Float.parseFloat(lon_input)>180||Float.parseFloat(lon_input)<-180) {
+				System.out.print("Please enter a decimal between -180 and 180: ");
+				lon_input = userInput.nextLine();
+			}
+			new_event.setLongitude(Float.parseFloat(lon_input));
 		}
-		new_event.setLongitude(Float.parseFloat(lon_input));
+		else System.out.println("No geographic location entered");
 		
 		System.out.print("Classification (Default is PUBLIC) \n");
 		System.out.print("(1)PUBLIC, (2)PRIVATE, (3)CONFIDENTIAL, (4)iana-token, (5)x-name: ");
@@ -281,10 +312,42 @@ public class Main2 {
 		return new_event;
 	}
 	
+	public static boolean isFloat(String input) {
+		try {
+			Float.parseFloat(input);
+			return true;
+		}
+		catch(Exception e) {
+			return false;
+		}
+	}
+	
 	/*
 	 * Check if date and time are in correct format
 	 */
-	// TODO write function to check if date and time are valid
+	public static boolean isValidDate(String input) {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+		dateFormat.setLenient(false);
+		try {
+			dateFormat.parse(input.trim());
+		}
+		catch (ParseException pe) {
+			return false;
+		}
+		return true;
+	}
+	
+	public static boolean isValidTime(String input) {
+		SimpleDateFormat timeFormat = new SimpleDateFormat("HHmmss");
+		timeFormat.setLenient(false);
+		try {
+			timeFormat.parse(input.trim());
+		}
+		catch (ParseException pe) {
+			return false;
+		}
+		return true;
+	}
 	// TODO add a menu where users can choose to add multiple events before
 	// quitting.
 }
