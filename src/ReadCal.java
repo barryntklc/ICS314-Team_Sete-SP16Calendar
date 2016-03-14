@@ -10,11 +10,13 @@ import java.util.ArrayList;
 
 public class ReadCal {
 
-	ArrayList<ArrayList<String>> fileContents = new ArrayList<ArrayList<String>>();
+	String fileContents = "";
+	ArrayList<ArrayList<String>> calendar = new ArrayList<ArrayList<String>>();
 	
 	public ReadCal(String filename) {
 		//given a filename, read its contents into the ArrayList of ArrayLists
 		//each ArrayList is a PARAMETER : VALUE pair, split by colon as the delimiter
+		
 		
 	}
 	

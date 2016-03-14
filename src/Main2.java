@@ -53,7 +53,8 @@ public class Main2 {
 			System.out.println("(1) Change the name of your save file");
 			System.out.println("(2) Add a new event");
 			System.out.println("(3) List all events");
-			System.out.println("(4) Exit");
+			System.out.println("(4) Load a file");
+			System.out.println("(5) Exit");
 			System.out.print(": ");
 
 			choice = getChoice();
@@ -76,8 +77,11 @@ public class Main2 {
 			} else if (choice == 3) { // list all
 				System.out.println("Listing all recorded events...");
 				listEvents();
-			} else if (choice == 4) { // exit
-				System.out.println("Exiting Calendar_IO");
+			} else if (choice == 4) {
+				System.out.println("Loading file...");
+				loadFile();
+			} else if (choice == 5) { // exit
+				System.out.println("Exiting Calendar_IO...");
 				saveFile();
 				exit = true;
 			} else {
@@ -172,6 +176,19 @@ public class Main2 {
 		System.out.println("____________________________________________________" + "\n");
 	}
 
+	/**
+	 * TODO loads a .ics file
+	 */
+	private static void loadFile() {
+		String filePath = "";
+		
+		System.out.println("New filename: ");
+		filePath = userInput.nextLine();
+		if (filePath == "" || filePath == "\n") {
+			//break
+		}
+	}
+	
 	/**
 	 * Writes given text that prints calendar data to a file here.
 	 */
@@ -312,6 +329,11 @@ public class Main2 {
 		return new_event;
 	}
 	
+	/**
+	 * Checks if a the given string is a float
+	 * @param input a given string
+	 * @return
+	 */
 	public static boolean isFloat(String input) {
 		try {
 			Float.parseFloat(input);
@@ -322,8 +344,10 @@ public class Main2 {
 		}
 	}
 	
-	/*
-	 * Check if date and time are in correct format
+	/**
+	 * Check if the date is a valid format
+	 * @param input a given date string
+	 * @return
 	 */
 	public static boolean isValidDate(String input) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
@@ -337,6 +361,11 @@ public class Main2 {
 		return true;
 	}
 	
+	/**
+	 * Check if the time is a valid format.
+	 * @param input a given time string
+	 * @return
+	 */
 	public static boolean isValidTime(String input) {
 		SimpleDateFormat timeFormat = new SimpleDateFormat("HHmmss");
 		timeFormat.setLenient(false);
