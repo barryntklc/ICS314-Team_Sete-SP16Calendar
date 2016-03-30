@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 
 /**
  * ReadCal
@@ -8,16 +9,25 @@ import java.util.ArrayList;
  * @author Chunmeista
  */
 
-public class ReadCal {
+public class CalendarFile {
 
 	String fileContents = "";
 	ArrayList<ArrayList<String>> calendar = new ArrayList<ArrayList<String>>();
 	
-	public ReadCal(String filename) {
+	public CalendarFile(String filename) {
 		//given a filename, read its contents into the ArrayList of ArrayLists
 		//each ArrayList is a PARAMETER : VALUE pair, split by colon as the delimiter
 		
+		System.out.println("Given filename: " + filename);
 		
+		Scanner file = new Scanner(filename);
+		
+			//System.
+		while (file.hasNext()) {
+			System.out.print(file.nextLine());
+		}
+		
+		file.close();
 	}
 	
 }
