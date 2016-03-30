@@ -1,3 +1,4 @@
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.text.ParseException;
@@ -9,8 +10,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 /**
- * Main
- * Main class for Calendar_IO
+ * Main Main class for Calendar_IO
  * 
  * @author Wing Yiu Ng
  * @author Bobby White
@@ -21,7 +21,7 @@ public class Main2 {
 	private static String filename = "newcalendar.ics";
 	private static ArrayList<ArrayList<String>> events = new ArrayList<ArrayList<String>>();
 	private static Scanner userInput = new Scanner(System.in);
-	
+
 	/**
 	 * main
 	 * 
@@ -97,18 +97,17 @@ public class Main2 {
 	 */
 	public static int getChoice() {
 		String inputS = (userInput.nextLine());
-		if(inputS.isEmpty()) return -2;
+		if (inputS.isEmpty())
+			return -2;
 		int input;
-		try
-		{
-		   input = Integer.parseInt(inputS);
-		} catch (Exception e)
-		{
-		   return -1;
+		try {
+			input = Integer.parseInt(inputS);
+		} catch (Exception e) {
+			return -1;
 		}
 		return input;
 	}
-	
+
 	/**
 	 * addEvent
 	 * 
@@ -117,16 +116,16 @@ public class Main2 {
 	public static void addEvent() {
 		ArrayList<String> details = new ArrayList<String>();
 		Event new_event = new Event();
-		//Calendar cal = Calendar.getInstance();
+		// Calendar cal = Calendar.getInstance();
 		Date date = new Date();
 
-		//System.out.println(cal.toString());
+		// System.out.println(cal.toString());
 
 		SimpleDateFormat dateFormat = new SimpleDateFormat("YYYYMMdd");
 		SimpleDateFormat timeFormat = new SimpleDateFormat("HHmmss");
 
 		new_event = getEventDetails();
-		
+
 		// TODO Replace with editable values
 		String description = new_event.getDescription();
 		String location = new_event.getLocation();
@@ -181,14 +180,29 @@ public class Main2 {
 	 */
 	private static void loadFile() {
 		String filePath = "";
-		
+
 		System.out.println("New filename: ");
 		filePath = userInput.nextLine();
-		if (filePath == "" || filePath == "\n") {
-			//break
+		// if the given filename is valid
+		if (filePath != "" || filePath != "\n") {
+			ArrayList<String> fileContents = new ArrayList<String>();
+			try {
+				File source = new File(filePath);
+				Scanner get = new Scanner(source);
+	
+				while (get.hasNextLine()) {
+					fileContents.add(get.nextLine());
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			System.out.println(fileContents);
+		} else {
+			System.out.println("ERROR: Invalid filename!");
 		}
 	}
-	
+
 	/**
 	 * Writes given text that prints calendar data to a file here.
 	 */
@@ -244,109 +258,112 @@ public class Main2 {
 		// the user is asked questions here
 		System.out.print("Event Name: ");
 		new_event.setTitle(userInput.nextLine());
-		
+
 		System.out.print("Start Date (YYYYMMDD): ");
 		String startDateInput = userInput.nextLine();
-		while(!isValidDate(startDateInput)) {
+		while (!isValidDate(startDateInput)) {
 			System.out.print("Incorrect Date! Please enter in the format YYYYMMDD: ");
 			startDateInput = userInput.nextLine();
 		}
 		new_event.setDateStart(startDateInput);
-		
+
 		System.out.print("Start Time (HHMMSS): ");
 		String startTimeInput = userInput.nextLine();
-		while(!isValidTime(startTimeInput)) {
+		while (!isValidTime(startTimeInput)) {
 			System.out.print("Incorrect Time! Please enter in the format HHMMSS: ");
 			startTimeInput = userInput.nextLine();
 		}
 		new_event.setTimeStart(startTimeInput);
-		
+
 		System.out.print("End Date (YYYYMMDD): ");
 		String endDateInput = userInput.nextLine();
-		while(!isValidDate(endDateInput)) {
+		while (!isValidDate(endDateInput)) {
 			System.out.print("Incorrect Date! Please enter in the format YYYYMMDD: ");
 			endDateInput = userInput.nextLine();
 		}
 		new_event.setDateEnd(endDateInput);
-		
+
 		System.out.print("End Time (HHMMSS): ");
 		String endTimeInput = userInput.nextLine();
-		while(!isValidTime(endTimeInput)) {
+		while (!isValidTime(endTimeInput)) {
 			System.out.print("Incorrect Time! Please enter in the format HHMMSS: ");
 			endTimeInput = userInput.nextLine();
 		}
 		new_event.setTimeEnd(endTimeInput);
-		
+
 		System.out.print("Location: ");
 		new_event.setLocation(userInput.nextLine());
-		
+
 		System.out.println("Would you like to enter the latitude and longitude (y/n): ");
 		String geo_choice = userInput.nextLine();
-		while(geo_choice.charAt(0)!='y' && geo_choice.charAt(0)!='Y' 
-				&& geo_choice.charAt(0)!='n' && geo_choice.charAt(0)!='N' ) {
+		while (geo_choice.charAt(0) != 'y' && geo_choice.charAt(0) != 'Y' && geo_choice.charAt(0) != 'n'
+				&& geo_choice.charAt(0) != 'N') {
 			System.out.println("Please enter y or n: ");
 			geo_choice = userInput.nextLine();
 		}
-		if(geo_choice.charAt(0) == 'Y' || geo_choice.charAt(0) == 'y'){
+		if (geo_choice.charAt(0) == 'Y' || geo_choice.charAt(0) == 'y') {
 			System.out.print("Latitude (-90 to 90): ");
 			String lat_input = userInput.nextLine();
-			while(!isFloat(lat_input)||Float.parseFloat(lat_input)>90||Float.parseFloat(lat_input)<-90) {
+			while (!isFloat(lat_input) || Float.parseFloat(lat_input) > 90 || Float.parseFloat(lat_input) < -90) {
 				System.out.print("Please enter a decimal between -90 and 90: ");
 				lat_input = userInput.nextLine();
 			}
 			new_event.setLatitude(Float.parseFloat(lat_input));
-			
+
 			System.out.print("Longiutude (-180 to 180): ");
 			String lon_input = userInput.nextLine();
-			while(!isFloat(lon_input)||Float.parseFloat(lon_input)>180||Float.parseFloat(lon_input)<-180) {
+			while (!isFloat(lon_input) || Float.parseFloat(lon_input) > 180 || Float.parseFloat(lon_input) < -180) {
 				System.out.print("Please enter a decimal between -180 and 180: ");
 				lon_input = userInput.nextLine();
 			}
 			new_event.setLongitude(Float.parseFloat(lon_input));
-		}
-		else System.out.println("No geographic location entered");
-		
+		} else
+			System.out.println("No geographic location entered");
+
 		System.out.print("Classification (Default is PUBLIC) \n");
 		System.out.print("(1)PUBLIC, (2)PRIVATE, (3)CONFIDENTIAL, (4)iana-token, (5)x-name: ");
-		String[] classifications = {"PUBLIC", "PRIVATE", "CONFIDENTIAL", "iana-token", "x-name"};
+		String[] classifications = { "PUBLIC", "PRIVATE", "CONFIDENTIAL", "iana-token", "x-name" };
 		int class_choice = 0;
 		class_choice = getChoice();
-		while((class_choice!=-2)&&(class_choice>5||class_choice<1))  {
+		while ((class_choice != -2) && (class_choice > 5 || class_choice < 1)) {
 			System.out.print("(1)PUBLIC, (2)PRIVATE, (3)CONFIDENTIAL, (4)iana-token, (5)x-name: \n");
 			System.out.print("Please enter a number from the list above: ");
 			class_choice = getChoice();
 		}
-		if(class_choice==-2)
+		if (class_choice == -2)
 			new_event.setClassification("PUBLIC");
 		else
-			new_event.setClassification(classifications[class_choice-1]);
-		
+			new_event.setClassification(classifications[class_choice - 1]);
+
 		System.out.print("Description: ");
 		new_event.setDescription(userInput.nextLine());
 
-		//System.out.println(answers.toString());
-		
+		// System.out.println(answers.toString());
+
 		return new_event;
 	}
-	
+
 	/**
 	 * Checks if a the given string is a float
-	 * @param input a given string
+	 * 
+	 * @param input
+	 *            a given string
 	 * @return
 	 */
 	public static boolean isFloat(String input) {
 		try {
 			Float.parseFloat(input);
 			return true;
-		}
-		catch(Exception e) {
+		} catch (Exception e) {
 			return false;
 		}
 	}
-	
+
 	/**
 	 * Check if the date is a valid format
-	 * @param input a given date string
+	 * 
+	 * @param input
+	 *            a given date string
 	 * @return
 	 */
 	public static boolean isValidDate(String input) {
@@ -354,16 +371,17 @@ public class Main2 {
 		dateFormat.setLenient(false);
 		try {
 			dateFormat.parse(input.trim());
-		}
-		catch (ParseException pe) {
+		} catch (ParseException pe) {
 			return false;
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Check if the time is a valid format.
-	 * @param input a given time string
+	 * 
+	 * @param input
+	 *            a given time string
 	 * @return
 	 */
 	public static boolean isValidTime(String input) {
@@ -371,8 +389,7 @@ public class Main2 {
 		timeFormat.setLenient(false);
 		try {
 			timeFormat.parse(input.trim());
-		}
-		catch (ParseException pe) {
+		} catch (ParseException pe) {
 			return false;
 		}
 		return true;
