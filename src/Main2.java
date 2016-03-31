@@ -199,7 +199,6 @@ public class Main2 {
 
 						KVPair pair = new KVPair(buffer.split(":"));
 						pairs.add(pair);
-						//System.out.println(pair.toString());
 					}
 					
 					fileContents.add(buffer);
