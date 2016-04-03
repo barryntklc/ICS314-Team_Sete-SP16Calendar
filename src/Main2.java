@@ -186,23 +186,25 @@ public class Main2 {
 		// if the given filename is valid
 		if (filePath != "" || filePath != "\n") {
 			ArrayList<String> fileContents = new ArrayList<String>();
-			ArrayList<KVPair> pairs = new ArrayList<KVPair>();
+			KVList pairs = new KVList();
 			
 			try {
 				File source = new File(filePath);
 				Scanner get = new Scanner(source);
-	
+				
+				
 				while (get.hasNextLine()) {
 					String buffer = get.nextLine();
 					
 					if (buffer.contains(":")) {
 
-						KVPair pair = new KVPair(buffer.split(":"));
-						pairs.add(pair);
+						pairs.add(buffer.split(":"));
 					}
 					
 					fileContents.add(buffer);
 				}
+				
+			//System.out.println(pairs.toString());
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
