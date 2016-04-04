@@ -24,14 +24,44 @@ public class KVList {
 		return pairs.toString();
 	}
 	
-	//get by index
-	//public String[] get(int index) {
+	//get key:value pair
+	public String[] getPair(int index) {
+		String[] returnBuf = {pairs.get(index).key, pairs.get(index).val};
 		
-	//}
+		return returnBuf;
+	}
 	
-	//get by key
+	//get by key, first result
+	public String getVal(String key) {
+		if (pairs.size() == 0) {
+			return null;
+		} else {
+			for (int i = 0; i < pairs.size(); i++) {
+				System.out.println(pairs.get(i).key);
+				System.out.println(pairs.get(i).val);
+				
+				if (pairs.get(i).key == key) {
+					return pairs.get(i).val;
+				}
+			}
+			return null;
+		}
+	}
 	
-	//set by key
+	//set by key, first result
+	public boolean setVal(String key, String val) {
+		if (pairs.size() == 0) {
+			return false;
+		} else {
+			for (int i = 0; i < pairs.size(); i++) {
+				if (pairs.get(i).key == key) {
+					pairs.get(i).val = val;
+					return true;
+				}
+			}
+			return false;
+		}
+	}
 	
 	public boolean contains() {
 		return false;
@@ -66,11 +96,17 @@ public class KVList {
 						strBuffer = strBuffer + ':';
 					}
 				}
-				
 				this.val = strBuffer;
 			}
 		}
 
+		/*
+		public String[] getPair() {
+			String[] returnBuf = {key, val};
+			return returnBuf;
+		}
+		*/
+		
 		public String toString() {
 			return "(" + key + "," + val + ")";
 		}

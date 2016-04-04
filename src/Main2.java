@@ -210,6 +210,7 @@ public class Main2 {
 			}
 
 			System.out.println(pairs);
+			System.out.println(pairs.getVal("CALSCALE"));
 		} else {
 			System.out.println("ERROR: Invalid filename!");
 		}
