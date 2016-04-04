@@ -280,7 +280,7 @@ public class Main2 {
 			System.out.print("Incorrect Date! Please enter in the format YYYYMMDD: ");
 			startDateInput = userInput.nextLine();
 		}
-		new_event.setDateStart(startDateInput);
+		//new_event.setDateStart(startDateInput);
 
 		System.out.print("Start Time (HHMMSS): ");
 		String startTimeInput = userInput.nextLine();
@@ -288,9 +288,10 @@ public class Main2 {
 			System.out.print("Incorrect Time! Please enter in the format HHMMSS: ");
 			startTimeInput = userInput.nextLine();
 		}
-		new_event.setTimeStart(startTimeInput);
+		//new_event.setTimeStart(startTimeInput);
 		
-		String dtstart = new_event.getDateStart() + "T" + new_event.getTimeStart();
+		String dtstart = startDateInput + "T" + startTimeInput;
+		details.add("DTSTART", dtstart);
 
 		System.out.print("End Date (YYYYMMDD): ");
 		String endDateInput = userInput.nextLine();
@@ -298,7 +299,7 @@ public class Main2 {
 			System.out.print("Incorrect Date! Please enter in the format YYYYMMDD: ");
 			endDateInput = userInput.nextLine();
 		}
-		new_event.setDateEnd(endDateInput);
+		//new_event.setDateEnd(endDateInput);
 
 		System.out.print("End Time (HHMMSS): ");
 		String endTimeInput = userInput.nextLine();
@@ -306,12 +307,14 @@ public class Main2 {
 			System.out.print("Incorrect Time! Please enter in the format HHMMSS: ");
 			endTimeInput = userInput.nextLine();
 		}
-		new_event.setTimeEnd(endTimeInput);
+		//new_event.setTimeEnd(endTimeInput);
 		
-		String dtend = new_event.getDateEnd() + "T" + new_event.getTimeEnd();
-
+		String dtend = endDateInput + "T" + endTimeInput;
+		details.add("DTEND", dtend);
+		
 		System.out.print("Location: ");
-		new_event.setLocation(userInput.nextLine());
+		//new_event.setLocation(userInput.nextLine());
+		details.add("LOCATION", userInput.nextLine());
 
 		System.out.println("Would you like to enter the latitude and longitude (y/n): ");
 		String geo_choice = userInput.nextLine();
