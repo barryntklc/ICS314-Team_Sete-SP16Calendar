@@ -4,7 +4,7 @@ public class Event {
 	private String classification;
 	private float longitude, latitude;		// Geographic location
 	private String file_name;
-	
+	private String comment;
 	private KVList attrib = new KVList();
 	
 	
@@ -14,6 +14,7 @@ public class Event {
 	public Event() {
 		setTitle("");
 		setDescription("");
+		comment="";
 		//date_created = getCurrentDate();
 		setClassification("PUBLIC");
 		setFileName(null);
@@ -26,7 +27,7 @@ public class Event {
 	public Event (String titleI, String date_startI, String date_endI,
 			String time_startI, String time_endI, String descriptionI, 
 			String locationI, float latitudeI,
-			float longitudeI, String file_nameI) {
+			float longitudeI, String file_nameI,String commentI) {
 		setTitle(titleI);
 		setDateStart(date_startI);
 		setDateEnd(date_endI);
@@ -38,12 +39,14 @@ public class Event {
 		setLatitude(latitudeI);
 		setLongitude(longitudeI);
 		setFileName(file_nameI);
+		setComment(commentI);
 	}
 	
+
 	public Event (String titleI, String date_startI, String date_endI,
 			String time_startI, String time_endI, String descriptionI, 
 			String classificationI, String locationI, float latitudeI,
-			float longitudeI, String file_nameI) {
+			float longitudeI, String file_nameI, String commentI) {
 		setTitle(titleI);
 		setDateStart(date_startI);
 		setDateEnd(date_endI);
@@ -55,6 +58,7 @@ public class Event {
 		setLatitude(latitudeI);
 		setLongitude(longitudeI);
 		setFileName(file_nameI);
+		setComment(commentI);
 	}
 	
 	
@@ -100,6 +104,11 @@ public class Event {
 		file_name = string;
 	}
 	
+	public void setComment(String x) {
+		comment=x;	
+	}
+
+	
 	/*
 	 * Getters
 	 */
@@ -139,6 +148,9 @@ public class Event {
 	}
 	public String getFileName() {
 		return file_name;
+	}
+	public String getComment() {
+		return comment;
 	}
 	
 	public String printEvent() {

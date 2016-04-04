@@ -126,6 +126,7 @@ public class Main2 {
 
 		// TODO Replace with editable values
 		String description = new_event.getDescription();
+		String comment = new_event.getComment();
 		String location = new_event.getLocation();
 		String summary = new_event.getTitle();
 		String date_start = new_event.getDateStart() + "T" + new_event.getTimeStart();
@@ -355,6 +356,14 @@ public class Main2 {
 
 		System.out.print("Description: ");
 		new_event.setDescription(userInput.nextLine());
+		
+		// set comment to calculation from great circle distance don't know how 
+		// that will work with the list. 
+		// new_event.setComment(gcd calculation from list of events);
+		
+		
+		// System.out.println(answers.toString());
+
 
 		return new_event;
 	}
