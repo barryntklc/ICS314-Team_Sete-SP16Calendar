@@ -37,10 +37,7 @@ public class KVList {
 			return null;
 		} else {
 			for (int i = 0; i < pairs.size(); i++) {
-				System.out.println(pairs.get(i).key);
-				System.out.println(pairs.get(i).val);
-				
-				if (pairs.get(i).key == key) {
+				if (pairs.get(i).key.equals(key)) {
 					return pairs.get(i).val;
 				}
 			}
@@ -54,7 +51,7 @@ public class KVList {
 			return false;
 		} else {
 			for (int i = 0; i < pairs.size(); i++) {
-				if (pairs.get(i).key == key) {
+				if (pairs.get(i).key.equals(key)) {
 					pairs.get(i).val = val;
 					return true;
 				}
