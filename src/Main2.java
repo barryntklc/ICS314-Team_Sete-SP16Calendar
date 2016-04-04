@@ -271,7 +271,6 @@ public class Main2 {
 
 		// the user is asked questions here
 		System.out.print("Event Name: ");
-		//new_event.setTitle(userInput.nextLine());
 		details.add("SUMMARY", userInput.nextLine());
 		
 		System.out.print("Start Date (YYYYMMDD): ");
@@ -280,7 +279,6 @@ public class Main2 {
 			System.out.print("Incorrect Date! Please enter in the format YYYYMMDD: ");
 			startDateInput = userInput.nextLine();
 		}
-		//new_event.setDateStart(startDateInput);
 
 		System.out.print("Start Time (HHMMSS): ");
 		String startTimeInput = userInput.nextLine();
@@ -288,7 +286,6 @@ public class Main2 {
 			System.out.print("Incorrect Time! Please enter in the format HHMMSS: ");
 			startTimeInput = userInput.nextLine();
 		}
-		//new_event.setTimeStart(startTimeInput);
 		
 		String dtstart = startDateInput + "T" + startTimeInput;
 		details.add("DTSTART", dtstart);
@@ -299,7 +296,6 @@ public class Main2 {
 			System.out.print("Incorrect Date! Please enter in the format YYYYMMDD: ");
 			endDateInput = userInput.nextLine();
 		}
-		//new_event.setDateEnd(endDateInput);
 
 		System.out.print("End Time (HHMMSS): ");
 		String endTimeInput = userInput.nextLine();
@@ -307,15 +303,13 @@ public class Main2 {
 			System.out.print("Incorrect Time! Please enter in the format HHMMSS: ");
 			endTimeInput = userInput.nextLine();
 		}
-		//new_event.setTimeEnd(endTimeInput);
 		
 		String dtend = endDateInput + "T" + endTimeInput;
 		details.add("DTEND", dtend);
 		
 		System.out.print("Location: ");
-		//new_event.setLocation(userInput.nextLine());
 		details.add("LOCATION", userInput.nextLine());
-
+		
 		System.out.println("Would you like to enter the latitude and longitude (y/n): ");
 		String geo_choice = userInput.nextLine();
 		while (geo_choice.charAt(0) != 'y' && geo_choice.charAt(0) != 'Y' && geo_choice.charAt(0) != 'n'
@@ -330,7 +324,7 @@ public class Main2 {
 				System.out.print("Please enter a decimal between -90 and 90: ");
 				lat_input = userInput.nextLine();
 			}
-			new_event.setLatitude(Float.parseFloat(lat_input));
+			//new_event.setLatitude(Float.parseFloat(lat_input));
 
 			System.out.print("Longitude (-180 to 180): ");
 			String lon_input = userInput.nextLine();
@@ -338,10 +332,14 @@ public class Main2 {
 				System.out.print("Please enter a decimal between -180 and 180: ");
 				lon_input = userInput.nextLine();
 			}
-			new_event.setLongitude(Float.parseFloat(lon_input));
-		} else
+			//new_event.setLongitude(Float.parseFloat(lon_input));
+			details.add("GEO", lat_input + ";" + lon_input);
+		} else {
 			System.out.println("No geographic location entered");
-
+		}
+		
+		//TODO CONTINUE
+		
 		System.out.print("Classification (Default is PUBLIC) \n");
 		System.out.print("(1)PUBLIC, (2)PRIVATE, (3)CONFIDENTIAL, (4)iana-token, (5)x-name: ");
 		String[] classifications = { "PUBLIC", "PRIVATE", "CONFIDENTIAL", "iana-token", "x-name" };
