@@ -50,13 +50,18 @@ public class KVList {
 		if (pairs.size() == 0) {
 			return false;
 		} else {
+			boolean contains = false;
+			
 			for (int i = 0; i < pairs.size(); i++) {
 				if (pairs.get(i).key.equals(key)) {
+					contains = true;
 					pairs.get(i).val = val;
-					return true;
 				}
 			}
-			return false;
+			if (contains == false) {
+				add(key, val);
+			}
+			return true;
 		}
 	}
 	
