@@ -1,25 +1,11 @@
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
-import java.util.Scanner;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-
-
 public class Event {
-	private String title;
-	private String date_start;
-	private String date_end;
 	private String time_start;
 	private String time_end;
-	//private String date_stamp;
-	private String description;
 	private String classification;
-	//private static String date_created;
-	private String location;
 	private float longitude, latitude;		// Geographic location
 	private String file_name;
+	
+	private KVList attrib = new KVList();
 	
 	
 	/**
@@ -31,6 +17,10 @@ public class Event {
 		//date_created = getCurrentDate();
 		setClassification("PUBLIC");
 		setFileName(null);
+	}
+	
+	public Event (KVList attrib) {
+		this.attrib = attrib;
 	}
 	
 	public Event (String titleI, String date_startI, String date_endI,
@@ -72,13 +62,16 @@ public class Event {
 	 * Setters
 	 */
 	public void setTitle (String string) {
-		title = string;
+		//title = string;
+		attrib.setVal("SUMMARY", string);
 	}
 	public void setDateStart (String string) {
-		date_start = string;
+		//date_start = string;
+		attrib.setVal("DTSTART", string);
 	}
 	public void setDateEnd (String string) {
-		date_end = string;
+		//date_end = string;
+		attrib.setVal("DTEND", string);
 	}
 	public void setTimeStart (String string) {
 		time_start = string;
@@ -87,10 +80,12 @@ public class Event {
 		time_end = string;
 	}
 	public void setDescription (String string) {
-		description = string;
+		//description = string;
+		attrib.setVal("DESCRIPTION", string);
 	}
 	public void setLocation (String string) {
-		location = string;
+		//location = string;
+		attrib.setVal("LOCATION", string);
 	}
 	public void setLatitude (float lat) {
 		latitude = lat;
@@ -113,13 +108,13 @@ public class Event {
 		SimpleDateFormat sdf = new SimpleDateFormat("YYYYMMDD'T'HHmmsszz");
 	}*/
 	public String getTitle() {
-		return title;
+		return attrib.getVal("TITLE");
 	}
 	public String getDateStart() {
-		return date_start;
+		return attrib.getVal("DTSTART");
 	}
 	public String getDateEnd() {
-		return date_end;
+		return attrib.getVal("DTEND");
 	}
 	public String getTimeStart() {
 		return time_start;
@@ -128,10 +123,10 @@ public class Event {
 		return time_end;
 	}
 	public String getDescription() {
-		return description;
+		return attrib.getVal("SUMMARY");
 	}
 	public String getLocation() {
-		return location;
+		return attrib.getVal("LOCATION");
 	}
 	public float getLatitude() {
 		return latitude;
@@ -146,4 +141,19 @@ public class Event {
 		return file_name;
 	}
 	
+	public String printEvent() {
+		String buffer = "";
+		buffer = getTitle() + " ( " + getDateStart() + " - " + getDateEnd() + " )" + "\n";
+		buffer = buffer + getLocation() + "\n";
+		buffer = buffer + "\n";
+		buffer = buffer + getDescription() + "\n";
+		buffer = buffer + "\n";
+		
+		return buffer;
+	}
+
+	public String toString() {
+		String buffer = "BEGIN:VEVENT\n" + attrib.toString() + "END:VEVENT\n";
+		return buffer;
+	}
 }

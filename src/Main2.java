@@ -4,6 +4,7 @@ import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -19,7 +20,8 @@ import java.util.Date;
 public class Main2 {
 
 	private static String filename = "newcalendar.ics";
-	private static ArrayList<ArrayList<String>> events = new ArrayList<ArrayList<String>>();
+	//private static ArrayList<ArrayList<String>> events = new ArrayList<ArrayList<String>>();
+	private static ICalendar cal = new ICalendar();
 	private static Scanner userInput = new Scanner(System.in);
 
 	/**
@@ -48,7 +50,7 @@ public class Main2 {
 		while (!exit) {
 			int choice = 0;
 
-			System.out.println("There are now ( " + events.size() + " ) events queued.");
+			System.out.println("There are now ( " + cal.size() + " ) events queued.");
 			System.out.println("Events will be written to \"" + filename + "\".");
 			System.out.println("(1) Change the name of your save file");
 			System.out.println("(2) Add a new event");
@@ -75,7 +77,6 @@ public class Main2 {
 				System.out.println("Creating an event...");
 				addEvent();
 			} else if (choice == 3) { // list all
-				System.out.println("Listing all recorded events...");
 				listEvents();
 			} else if (choice == 4) {
 				System.out.println("Loading file...");
@@ -114,12 +115,9 @@ public class Main2 {
 	 * adds a new event to the .ics file
 	 */
 	public static void addEvent() {
-		ArrayList<String> details = new ArrayList<String>();
+		KVList eventAttrib = new KVList();
 		Event new_event = new Event();
-		// Calendar cal = Calendar.getInstance();
 		Date date = new Date();
-
-		// System.out.println(cal.toString());
 
 		SimpleDateFormat dateFormat = new SimpleDateFormat("YYYYMMdd");
 		SimpleDateFormat timeFormat = new SimpleDateFormat("HHmmss");
@@ -139,40 +137,33 @@ public class Main2 {
 		String latitude = Float.toString(new_event.getLatitude());
 		String longitude = Float.toString(new_event.getLongitude());
 
-		// TODO make DTSTART, DTEND customizable by the user
-		details.add("BEGIN:VEVENT" + "\n");
-		details.add("DTSTART:" + date_start + "\n");
-		details.add("DTEND:" + date_end + "\n");
-		details.add("DTSTAMP:" + date_stamp + "\n");
+		eventAttrib.add("DTSTART", date_start);
+		eventAttrib.add("DTEND", date_end);
+		eventAttrib.add("DTSTAMP", date_stamp);
 		// UID is not needed unless you want to give the event a unique
 		// identifier
 		// details.add("UID:rhh4l2hdp1snqc7ego4lueh18c@google.com" + "\n");
-		details.add("CREATED:" + date_created + "\n");
-		details.add("DESCRIPTION:" + description + "\n");
-		details.add("LAST-MODIFIED:" + date_modified + "\n");
-		details.add("LOCATION:" + location + "\n");
-		details.add("GEO:" + latitude + ";" + longitude + "\n");
-		details.add("CLASS:" + classification + "\n");
-		details.add("SEQUENCE:1" + "\r\n");
-		details.add("STATUS:CONFIRMED" + "\n");
-		details.add("SUMMARY:" + summary + "\n");
-		details.add("TRANSP:TRANSPARENT" + "\n");
-		details.add("END:VEVENT" + "\n");
+		eventAttrib.add("CREATED", date_created);
+		eventAttrib.add("DESCRIPTION", description);
+		eventAttrib.add("LAST-MODIFIED", date_modified);
+		eventAttrib.add("LOCATION", location);
+		eventAttrib.add("GEO", latitude + ";" + longitude);
+		eventAttrib.add("CLASS", classification);
+		eventAttrib.add("SEQUENCE", "1");
+		eventAttrib.add("STATUS", "CONFIRMED");
+		eventAttrib.add("SUMMARY", summary);
+		eventAttrib.add("TRANSP", "TRANSPARENT");
 
-		events.add(details);
+		cal.addEvent(eventAttrib);
 	}
 
 	public static void listEvents() {
-		for (int h = 0; h < events.size(); h++) {
-			System.out.println("____________________________________________________");
-			System.out.println("\"" + events.get(h).get(10).substring(8, events.get(h).get(10).length() - 1) + "\" - "
-					+ events.get(h).get(4).substring(8, events.get(h).get(4).length() - 1));
-			System.out.println(events.get(h).get(1).substring(8, events.get(h).get(1).length() - 1) + " ==> "
-					+ events.get(h).get(2).substring(8, events.get(h).get(2).length() - 1) + "\n");
-			System.out.println(events.get(h).get(7).substring(0, events.get(h).get(7).length() - 1));
-			System.out.println(events.get(h).get(5).substring(0, events.get(h).get(5).length() - 1));
+		if (cal.size() > 0) {
+			System.out.println("Listing all recorded events...");
+			System.out.println(cal.printCal());
+		} else {
+			System.out.println("ERROR: There are no events!");
 		}
-		System.out.println("____________________________________________________" + "\n");
 	}
 
 	/**
@@ -181,7 +172,7 @@ public class Main2 {
 	private static void loadFile() {
 		String filePath = "";
 
-		System.out.println("New filename: ");
+		System.out.print("New filename: ");
 		filePath = userInput.nextLine();
 		// if the given filename is valid
 		if (filePath != "" || filePath != "\n") {
@@ -192,19 +183,49 @@ public class Main2 {
 				File source = new File(filePath);
 				Scanner get = new Scanner(source);
 				
-				
 				while (get.hasNextLine()) {
-					String buffer = get.nextLine();
-					
-					if (buffer.contains(":")) {
-
-						pairs.add(buffer.split(":"));
-					}
-					
-					fileContents.add(buffer);
+					fileContents.add(get.nextLine());
 				}
 				
-			//System.out.println(pairs.toString());
+				//if file begins with BEGIN:VCALENDAR and ends with END:VCALENDAR
+				if (fileContents.get(0).equals("BEGIN:VCALENDAR") && fileContents.get(fileContents.size()-1).equals("END:VCALENDAR")) {
+					//if file contains an equal number of BEGIN:VEVENT and END:VEVENT
+					if (Collections.frequency(fileContents, "BEGIN:VEVENT") == Collections.frequency(fileContents, "END:VEVENT")) {
+						
+						//find the indexes
+						ArrayList<Integer> event_begin = new ArrayList<Integer>();
+						ArrayList<Integer> event_end = new ArrayList<Integer>();
+						for (int x = 0; x < fileContents.size(); x++) {
+							if (fileContents.get(x).equals("BEGIN:VEVENT")) {
+								event_begin.add(x);
+							} else if (fileContents.get(x).equals("END:VEVENT")) {
+								event_end.add(x);
+							}
+						}
+						
+						/*
+						KVList calAttrib = new KVList();
+						//to first begin
+						for (int iter1 = 1; iter1 < event_begin.get(0); iter1++) {
+							calAttrib.add(fileContents.get(iter1));
+							System.out.println(fileContents.get(iter1));
+						}
+						
+						//while () {
+							//
+						//}
+						*/
+						
+						
+					} else {
+						System.out.println("ERROR: File is not formatted correctly!");
+					}
+				} else {
+					System.out.println("ERROR: File is not formatted correctly!");
+				}
+				
+			} catch (FileNotFoundException e) {
+				System.out.println("ERROR: Could not find the specified file!");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -222,29 +243,7 @@ public class Main2 {
 	private static void saveFile() {
 		ArrayList<String> buffer = new ArrayList<String>();
 		String calendar_name = "TESTIMPORT";
-
-		buffer.add("BEGIN:VCALENDAR" + "\n");
-		buffer.add("VERSION:2.0" + "\n");
-		buffer.add("PRODID:-//Google Inc//Google Calendar 70.9054//EN" + "\n");
-		buffer.add("CALSCALE:GREGORIAN" + "\n");
-		buffer.add("METHOD:PUBLISH" + "\n");
-		buffer.add("X-WR-CALNAME:" + calendar_name + "\n");
-		buffer.add("BEGIN:VTIMEZONE" + "\n");
-		buffer.add("TZID:Pacific/Honolulu" + "\n");
-		buffer.add("BEGIN:STANDARD" + "\n");
-		buffer.add("TZOFFSETFROM:-1000" + "\n");
-		buffer.add("TZOFFSETTO:-1000" + "\n");
-		buffer.add("TZNAME:HST" + "\n");
-		buffer.add("END:STANDARD" + "\n");
-		buffer.add("END:VTIMEZONE" + "\n");
-		buffer.add("X-WR-CALDESC:" + "\n");
-
-		for (int h = 0; h < events.size(); h++) {
-			for (int i = 0; i < events.get(h).size(); i++) {
-				buffer.add(events.get(h).get(i));
-			}
-		}
-		buffer.add("END:VCALENDAR" + "\n");
+		buffer.add(cal.toString());
 
 		System.out.println("Buffer of output to be saved:");
 		System.out.println(buffer);
@@ -267,11 +266,13 @@ public class Main2 {
 	 */
 	private static Event getEventDetails() {
 		Event new_event = new Event();
+		KVList details = new KVList();
 
 		// the user is asked questions here
 		System.out.print("Event Name: ");
-		new_event.setTitle(userInput.nextLine());
-
+		//new_event.setTitle(userInput.nextLine());
+		details.add("SUMMARY", userInput.nextLine());
+		
 		System.out.print("Start Date (YYYYMMDD): ");
 		String startDateInput = userInput.nextLine();
 		while (!isValidDate(startDateInput)) {
@@ -287,6 +288,8 @@ public class Main2 {
 			startTimeInput = userInput.nextLine();
 		}
 		new_event.setTimeStart(startTimeInput);
+		
+		String dtstart = new_event.getDateStart() + "T" + new_event.getTimeStart();
 
 		System.out.print("End Date (YYYYMMDD): ");
 		String endDateInput = userInput.nextLine();
@@ -303,6 +306,8 @@ public class Main2 {
 			endTimeInput = userInput.nextLine();
 		}
 		new_event.setTimeEnd(endTimeInput);
+		
+		String dtend = new_event.getDateEnd() + "T" + new_event.getTimeEnd();
 
 		System.out.print("Location: ");
 		new_event.setLocation(userInput.nextLine());
@@ -323,7 +328,7 @@ public class Main2 {
 			}
 			new_event.setLatitude(Float.parseFloat(lat_input));
 
-			System.out.print("Longiutude (-180 to 180): ");
+			System.out.print("Longitude (-180 to 180): ");
 			String lon_input = userInput.nextLine();
 			while (!isFloat(lon_input) || Float.parseFloat(lon_input) > 180 || Float.parseFloat(lon_input) < -180) {
 				System.out.print("Please enter a decimal between -180 and 180: ");
@@ -350,8 +355,6 @@ public class Main2 {
 
 		System.out.print("Description: ");
 		new_event.setDescription(userInput.nextLine());
-
-		// System.out.println(answers.toString());
 
 		return new_event;
 	}

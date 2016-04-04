@@ -1,4 +1,3 @@
-import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -21,7 +20,12 @@ public class KVList {
 		pairs.add(new KVPair(str));
 	}
 	public String toString() {
-		return pairs.toString();
+		String buffer = "";
+		
+		for (int i = 0; i < pairs.size(); i++) {
+			buffer = buffer + pairs.get(i).toString() + "\n";
+		}
+		return buffer;
 	}
 	
 	//get key:value pair
@@ -101,16 +105,13 @@ public class KVList {
 				this.val = strBuffer;
 			}
 		}
-
-		/*
-		public String[] getPair() {
-			String[] returnBuf = {key, val};
-			return returnBuf;
+		
+		public String printPair() {
+			return key + ": " + val;
 		}
-		*/
 		
 		public String toString() {
-			return "(" + key + "," + val + ")";
+			return key + ":" + val;
 		}
 	}
 }
