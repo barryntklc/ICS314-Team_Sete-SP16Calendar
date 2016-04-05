@@ -433,6 +433,7 @@ public class Main2 {
 		}
 		return true;
 	}
+	/*
 <<<<<<< HEAD
 	
 	// TODO add a menu where users can choose to add multiple events before
@@ -467,5 +468,5 @@ public class Main2 {
 //	    }
 //	  }
 =======
->>>>>>> origin/master
+>>>>>>> origin/master*/
 }
