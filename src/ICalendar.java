@@ -43,7 +43,6 @@ public class ICalendar {
 		for (int i = 0; i < events.size(); i++) {
 			buffer = buffer + "____________________________________________________" + "\n";
 			buffer = buffer + events.get(i).printEvent();
-			//System.out.println("TOSTRING: " + events.get(i).toString());
 		}
 		buffer = buffer + "____________________________________________________" + "\n";
 	
@@ -51,7 +50,7 @@ public class ICalendar {
 	}
 	
 	public String toString() {
-		String buffer = "BEGIN:VCALENDAR";		
+		String buffer = "BEGIN:VCALENDAR" + "\n";		
 		buffer = buffer + attrib.toString();
 		for (int i = 0; i < events.size(); i++) {
 			buffer = buffer + events.get(i).toString();

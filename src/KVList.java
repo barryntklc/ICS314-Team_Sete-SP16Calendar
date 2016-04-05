@@ -35,6 +35,10 @@ public class KVList {
 		return returnBuf;
 	}
 	
+	public String getKey(int index) {
+		return pairs.get(index).key;
+	}
+	
 	//get by key, first result
 	public String getVal(String key) {
 		if (pairs.size() == 0) {
@@ -47,6 +51,10 @@ public class KVList {
 			}
 			return null;
 		}
+	}
+	
+	public String getVal(int index) {
+		return pairs.get(index).val;
 	}
 	
 	//set by key, first result
@@ -67,6 +75,10 @@ public class KVList {
 			}
 			return true;
 		}
+	}
+	
+	public int size() {
+		return pairs.size();
 	}
 	
 	public boolean contains() {
