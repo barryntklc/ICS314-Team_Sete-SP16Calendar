@@ -43,7 +43,7 @@ public class ICalendar {
 		for (int i = 0; i < events.size(); i++) {
 			buffer = buffer + "____________________________________________________" + "\n";
 			buffer = buffer + events.get(i).printEvent();
-			System.out.println("TOSTRING: " + events.get(i).toString());
+			//System.out.println("TOSTRING: " + events.get(i).toString());
 		}
 		buffer = buffer + "____________________________________________________" + "\n";
 	

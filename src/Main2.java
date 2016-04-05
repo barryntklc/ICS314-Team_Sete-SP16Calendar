@@ -20,7 +20,6 @@ import java.util.Date;
 public class Main2 {
 
 	private static String filename = "newcalendar.ics";
-	//private static ArrayList<ArrayList<String>> events = new ArrayList<ArrayList<String>>();
 	private static ICalendar cal = new ICalendar();
 	private static Scanner userInput = new Scanner(System.in);
 
@@ -41,6 +40,9 @@ public class Main2 {
 
 	/**
 	 * mainMenu
+	 * 
+	 * Displays the main menu.
+	 * 
 	 */
 	public static void mainMenu() {
 		System.out.println("Welcome to Calendar_IO! (Team Sete)");
@@ -122,39 +124,16 @@ public class Main2 {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("YYYYMMdd");
 		SimpleDateFormat timeFormat = new SimpleDateFormat("HHmmss");
 
-		new_event = getEventDetails();
-
-		// TODO Replace with editable values
-		String description = new_event.getDescription();
-		String comment = new_event.getComment();
-		String location = new_event.getLocation();
-		String summary = new_event.getTitle();
-		String date_start = new_event.getDateStart() + "T" + new_event.getTimeStart();
-		String date_end = new_event.getDateEnd() + "T" + new_event.getTimeEnd();
-		String date_stamp = dateFormat.format(date) + "T" + timeFormat.format(date);
-		String date_created = dateFormat.format(date) + "T" + timeFormat.format(date);
-		String date_modified = dateFormat.format(date) + "T" + timeFormat.format(date);
-		String classification = new_event.getClassification();
-		String latitude = Float.toString(new_event.getLatitude());
-		String longitude = Float.toString(new_event.getLongitude());
-
-		eventAttrib.add("DTSTART", date_start);
-		eventAttrib.add("DTEND", date_end);
-		eventAttrib.add("DTSTAMP", date_stamp);
-		// UID is not needed unless you want to give the event a unique
-		// identifier
-		// details.add("UID:rhh4l2hdp1snqc7ego4lueh18c@google.com" + "\n");
-		eventAttrib.add("CREATED", date_created);
-		eventAttrib.add("DESCRIPTION", description);
-		eventAttrib.add("LAST-MODIFIED", date_modified);
-		eventAttrib.add("LOCATION", location);
-		eventAttrib.add("GEO", latitude + ";" + longitude);
-		eventAttrib.add("CLASS", classification);
+		eventAttrib = getEventDetails();
+		
+		eventAttrib.add("DTSTAMP", dateFormat.format(date) + "T" + timeFormat.format(date));
+		eventAttrib.add("CREATED", dateFormat.format(date) + "T" + timeFormat.format(date));
+		eventAttrib.add("LAST-MODIFIED", dateFormat.format(date) + "T" + timeFormat.format(date));
 		eventAttrib.add("SEQUENCE", "1");
 		eventAttrib.add("STATUS", "CONFIRMED");
-		eventAttrib.add("SUMMARY", summary);
 		eventAttrib.add("TRANSP", "TRANSPARENT");
-
+		
+		System.out.println(eventAttrib.getVal("SUMMARY"));
 		cal.addEvent(eventAttrib);
 	}
 
@@ -265,51 +244,51 @@ public class Main2 {
 	 * 
 	 * @return an Event of user input
 	 */
-	private static Event getEventDetails() {
-		Event new_event = new Event();
+	private static KVList getEventDetails() {
+		//Event new_event = new Event();
 		KVList details = new KVList();
 
-		// the user is asked questions here
+		//SUMMARY
 		System.out.print("Event Name: ");
 		details.add("SUMMARY", userInput.nextLine());
 		
+		//DTSTART
 		System.out.print("Start Date (YYYYMMDD): ");
 		String startDateInput = userInput.nextLine();
 		while (!isValidDate(startDateInput)) {
 			System.out.print("Incorrect Date! Please enter in the format YYYYMMDD: ");
 			startDateInput = userInput.nextLine();
 		}
-
 		System.out.print("Start Time (HHMMSS): ");
 		String startTimeInput = userInput.nextLine();
 		while (!isValidTime(startTimeInput)) {
 			System.out.print("Incorrect Time! Please enter in the format HHMMSS: ");
 			startTimeInput = userInput.nextLine();
 		}
-		
 		String dtstart = startDateInput + "T" + startTimeInput;
 		details.add("DTSTART", dtstart);
 
+		//DTEND
 		System.out.print("End Date (YYYYMMDD): ");
 		String endDateInput = userInput.nextLine();
 		while (!isValidDate(endDateInput)) {
 			System.out.print("Incorrect Date! Please enter in the format YYYYMMDD: ");
 			endDateInput = userInput.nextLine();
 		}
-
 		System.out.print("End Time (HHMMSS): ");
 		String endTimeInput = userInput.nextLine();
 		while (!isValidTime(endTimeInput)) {
 			System.out.print("Incorrect Time! Please enter in the format HHMMSS: ");
 			endTimeInput = userInput.nextLine();
 		}
-		
 		String dtend = endDateInput + "T" + endTimeInput;
 		details.add("DTEND", dtend);
 		
+		//LOCATION
 		System.out.print("Location: ");
 		details.add("LOCATION", userInput.nextLine());
 		
+		//GEO
 		System.out.println("Would you like to enter the latitude and longitude (y/n): ");
 		String geo_choice = userInput.nextLine();
 		while (geo_choice.charAt(0) != 'y' && geo_choice.charAt(0) != 'Y' && geo_choice.charAt(0) != 'n'
@@ -324,7 +303,6 @@ public class Main2 {
 				System.out.print("Please enter a decimal between -90 and 90: ");
 				lat_input = userInput.nextLine();
 			}
-			//new_event.setLatitude(Float.parseFloat(lat_input));
 
 			System.out.print("Longitude (-180 to 180): ");
 			String lon_input = userInput.nextLine();
@@ -332,14 +310,12 @@ public class Main2 {
 				System.out.print("Please enter a decimal between -180 and 180: ");
 				lon_input = userInput.nextLine();
 			}
-			//new_event.setLongitude(Float.parseFloat(lon_input));
 			details.add("GEO", lat_input + ";" + lon_input);
 		} else {
 			System.out.println("No geographic location entered");
 		}
 		
-		//TODO CONTINUE
-		
+		//CLASS
 		System.out.print("Classification (Default is PUBLIC) \n");
 		System.out.print("(1)PUBLIC, (2)PRIVATE, (3)CONFIDENTIAL, (4)iana-token, (5)x-name: ");
 		String[] classifications = { "PUBLIC", "PRIVATE", "CONFIDENTIAL", "iana-token", "x-name" };
@@ -350,23 +326,25 @@ public class Main2 {
 			System.out.print("Please enter a number from the list above: ");
 			class_choice = getChoice();
 		}
-		if (class_choice == -2)
-			new_event.setClassification("PUBLIC");
-		else
-			new_event.setClassification(classifications[class_choice - 1]);
+		if (class_choice == -2) {
+			//new_event.setClassification("PUBLIC");
+			details.add("CLASS", "PUBLIC");
+		} else {
+			//new_event.setClassification(classifications[class_choice - 1]);
+			details.add("CLASS", classifications[class_choice - 1]);
+		}
 
+		//DESCRIPTION
 		System.out.print("Description: ");
-		new_event.setDescription(userInput.nextLine());
+		//new_event.setDescription(userInput.nextLine());
+		details.add("DESCRIPTION", userInput.nextLine());
 		
 		// set comment to calculation from great circle distance don't know how 
 		// that will work with the list. 
 		// new_event.setComment(gcd calculation from list of events);
-		
-		
 		// System.out.println(answers.toString());
-
-
-		return new_event;
+		//return new_event;
+		return details;
 	}
 
 	/**

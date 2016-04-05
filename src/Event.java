@@ -155,10 +155,10 @@ public class Event {
 	
 	public String printEvent() {
 		String buffer = "";
-		buffer = getTitle() + " ( " + getDateStart() + " - " + getDateEnd() + " )" + "\n";
-		buffer = buffer + getLocation() + "\n";
+		buffer = attrib.getVal("SUMMARY") + " ( " + attrib.getVal("DTSTART") + " - " + attrib.getVal("DTEND") + " )" + "\n";
+		buffer = buffer + attrib.getVal("LOCATION") + "\n";
 		buffer = buffer + "\n";
-		buffer = buffer + getDescription() + "\n";
+		buffer = buffer + attrib.getVal("DESCRIPTION") + "\n";
 		buffer = buffer + "\n";
 		
 		return buffer;
