@@ -1,10 +1,13 @@
-import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
- * Stores a key-value pair
+ * KVList
  * 
- * @author Chunmeista
+ * Stores key-value pairs
+ * 
+ * @author Wing Yiu Ng
+ * @author Bobby White
+ * @author Barryn Chun
  */
 public class KVList {
 
@@ -21,7 +24,12 @@ public class KVList {
 		pairs.add(new KVPair(str));
 	}
 	public String toString() {
-		return pairs.toString();
+		String buffer = "";
+		
+		for (int i = 0; i < pairs.size(); i++) {
+			buffer = buffer + pairs.get(i).toString() + "\n";
+		}
+		return buffer;
 	}
 	
 	//get key:value pair
@@ -29,6 +37,10 @@ public class KVList {
 		String[] returnBuf = {pairs.get(index).key, pairs.get(index).val};
 		
 		return returnBuf;
+	}
+	
+	public String getKey(int index) {
+		return pairs.get(index).key;
 	}
 	
 	//get by key, first result
@@ -43,6 +55,10 @@ public class KVList {
 			}
 			return null;
 		}
+	}
+	
+	public String getVal(int index) {
+		return pairs.get(index).val;
 	}
 	
 	//set by key, first result
@@ -63,6 +79,10 @@ public class KVList {
 			}
 			return true;
 		}
+	}
+	
+	public int size() {
+		return pairs.size();
 	}
 	
 	public boolean contains() {
@@ -101,16 +121,13 @@ public class KVList {
 				this.val = strBuffer;
 			}
 		}
-
-		/*
-		public String[] getPair() {
-			String[] returnBuf = {key, val};
-			return returnBuf;
+		
+		public String printPair() {
+			return key + ": " + val;
 		}
-		*/
 		
 		public String toString() {
-			return "(" + key + "," + val + ")";
+			return key + ":" + val;
 		}
 	}
 
