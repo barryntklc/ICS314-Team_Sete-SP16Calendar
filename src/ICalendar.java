@@ -64,7 +64,7 @@ public class ICalendar {
 		}
 		buffer = buffer + "END:VCALENDAR";
 		
-		System.out.println(buffer);
+		//System.out.println(buffer);
 		return buffer;
 	}
 }

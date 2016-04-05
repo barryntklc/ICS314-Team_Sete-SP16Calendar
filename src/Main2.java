@@ -162,7 +162,7 @@ public class Main2 {
 		// if the given filename is valid
 		if (filePath != "" || filePath != "\n") {
 			ArrayList<String> fileContents = new ArrayList<String>();
-			KVList pairs = new KVList();
+			//KVList pairs = new KVList();
 
 			try {
 				File source = new File(filePath);
@@ -235,8 +235,8 @@ public class Main2 {
 				e.printStackTrace();
 			}
 
-			System.out.println(pairs);
-			System.out.println(pairs.getVal("METHOD"));
+			//System.out.println(pairs);
+			//System.out.println(pairs.getVal("METHOD"));
 		} else {
 			System.out.println("ERROR: Invalid filename!");
 		}
@@ -249,13 +249,13 @@ public class Main2 {
 	 */
 	private static void saveFile() {
 		ArrayList<String> buffer = new ArrayList<String>();
-		//String calendar_name = "TESTIMPORT";
 		buffer.add(cal.toString());
 
-		System.out.println("Buffer of output to be saved:");
-		System.out.println(buffer);
+		//System.out.println("Buffer of output to be saved:");
+		//System.out.println(buffer);
 
 		try {
+			System.out.println("Saving events to file.");
 			PrintWriter output = new PrintWriter(filename);
 			for (int x = 0; x < buffer.size(); x++) {
 				output.write(buffer.get(x));
