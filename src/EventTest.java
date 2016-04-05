@@ -7,6 +7,7 @@ import junit.framework.TestCase;
 public class EventTest extends TestCase {
 
 	public void testEvent1() {
+		//tests Event()
 		
 		Event event1 = new Event();
 		//assertEquals("", event1.getTitle());
@@ -27,6 +28,8 @@ public class EventTest extends TestCase {
 	
 	
 	public void testEvent2() {
+		
+		//tests Event(KVList attrib)
 		
 		/*
 		 * 

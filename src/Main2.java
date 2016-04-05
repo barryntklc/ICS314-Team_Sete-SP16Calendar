@@ -197,22 +197,27 @@ public class Main2 {
 							KVList calAttrib = new KVList();
 							// to first begin
 							for (int iter1 = 1; iter1 < event_begin.get(0); iter1++) {
-								// calAttrib.add(fileContents.get(iter1));
-								System.out.println(fileContents.get(iter1));
+								calAttrib.add(fileContents.get(iter1).split(":"));
+								//System.out.println(fileContents.get(iter1));
 							}
 							System.out.println();
 							for (int iter2 = 0; iter2 < event_begin.size(); iter2++) {
+								KVList eventAttrib = new KVList();
 								int itera = event_begin.get(iter2) + 1;
 								while (itera < event_end.get(iter2)) {
-									System.out.println(fileContents.get(itera));
+									eventAttrib.add(fileContents.get(itera).split(":"));
+									//System.out.println(fileContents.get(itera));
 									itera++;
 								}
-								System.out.println();
+								cal.addEvent(eventAttrib);
+								//System.out.println();
 							}
 
 						} else {
+							KVList calAttrib = new KVList();
 							for (int x = 0; x < fileContents.size() - 1; x++) {
-								System.out.println(fileContents.get(x));
+								calAttrib.add(fileContents.get(x).split(":"));
+								//System.out.println(fileContents.get(x));
 							}
 							System.out.println("NOTE: File did not contain any events.");
 						}

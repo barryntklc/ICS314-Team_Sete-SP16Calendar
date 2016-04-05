@@ -1,3 +1,12 @@
+/**
+ * Event
+ * 
+ * Represents an event object
+ * 
+ * @author Wing Yiu Ng
+ * @author Bobby White
+ * @author Barryn Chun
+ */
 public class Event {
 	private KVList attrib = new KVList();
 	
@@ -9,13 +18,6 @@ public class Event {
 		attrib.setVal("DESCRIPTION", "");
 		attrib.setVal("COMMENT", "");
 		attrib.setVal("CLASS", "PUBLIC");
-		System.out.println(attrib);
-		
-		try {
-		    Thread.sleep(6000);                 //1000 milliseconds is one second.
-		} catch(InterruptedException ex) {
-		    Thread.currentThread().interrupt();
-		}
 	}
 	
 	public Event (KVList attrib) {

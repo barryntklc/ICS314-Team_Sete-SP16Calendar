@@ -1,9 +1,13 @@
 import java.util.ArrayList;
 
 /**
- * Stores a key-value pair
+ * KVList
  * 
- * @author Chunmeista
+ * Stores key-value pairs
+ * 
+ * @author Wing Yiu Ng
+ * @author Bobby White
+ * @author Barryn Chun
  */
 public class KVList {
 

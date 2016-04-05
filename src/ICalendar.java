@@ -1,5 +1,12 @@
 import java.util.ArrayList;
 
+/**
+ * ICalendar
+ * 
+ * @author Wing Yiu Ng
+ * @author Bobby White
+ * @author Barryn Chun
+ */
 public class ICalendar {
 
 	private KVList attrib = new KVList();
