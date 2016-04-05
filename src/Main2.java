@@ -249,7 +249,7 @@ public class Main2 {
 	 */
 	private static void saveFile() {
 		ArrayList<String> buffer = new ArrayList<String>();
-		String calendar_name = "TESTIMPORT";
+		//String calendar_name = "TESTIMPORT";
 		buffer.add(cal.toString());
 
 		System.out.println("Buffer of output to be saved:");

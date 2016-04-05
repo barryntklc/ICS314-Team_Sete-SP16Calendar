@@ -17,7 +17,7 @@ public class ICalendar {
 		attrib.add("PRODID", "-//Google Inc//Google Calendar 70.9054//EN");
 		attrib.add("CALSCALE", "GREGORIAN");
 		attrib.add("METHOD", "PUBLISH");
-		attrib.add("X-WR-CALNAME", "");
+		attrib.add("X-WR-CALNAME", "TESTIMPORT");
 		attrib.add("BEGIN", "VTIMEZONE");
 		attrib.add("TZID", "Pacific/Honolulu");
 		attrib.add("BEGIN", "STANDARD");
