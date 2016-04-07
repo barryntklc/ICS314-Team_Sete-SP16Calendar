@@ -212,6 +212,8 @@ public class Main2 {
 								cal.addEvent(eventAttrib);
 							}
 
+							//sort events
+							cal.sortEvents();
 						} else {
 							//read calendar attributes
 							KVList calAttrib = new KVList();

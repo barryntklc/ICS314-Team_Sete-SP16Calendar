@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * ICalendar
@@ -39,6 +41,12 @@ public class ICalendar {
 	
 	public void setName(String name) {
 		attrib.setVal("X-WR-CALNAME", name);
+	}
+	
+	//public void setCircleDistance
+	
+	public void sortEvents() {
+		Collections.sort(events);
 	}
 	
 	public int size() {
