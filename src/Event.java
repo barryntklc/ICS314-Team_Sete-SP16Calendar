@@ -40,12 +40,62 @@ public class Event implements Comparable<Event> {
 		}
 	}
 	
+	public String translateDate (String formattedDate) {
+		int date[] = splitDate(formattedDate);
+		
+		String AM_PM = "";
+		if (date[3] >= 12) {
+			AM_PM = "PM";
+		} else {
+			AM_PM = "AM";
+		}
+		return String.format("%02d", date[1]) + "/" + String.format("%02d", date[2]) + "/" + date[0] + " (" + date[3] + ":" + String.format("%02d", date[4]) + ":" + String.format("%02d", date[5]) + " " + AM_PM + ")";
+	}
+	
+	public String translateMonth (int monthInt) {
+		String[] monthName = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+		if (monthInt < 1 || monthInt > 12) {
+			return null;
+		} else {
+			return monthName[monthInt - 1];
+		}
+	}
+	
+	/**
+	 * YEAR, MONTH, DAY, HOUR, MINUTE, SECOND
+	 */
+	public int[] splitDate (String date) {
+		int buffer[] = new int[6];
+		String date_split[] = date.split("T");
+		buffer[0] = Integer.parseInt(date_split[0].substring(0, 4));
+		buffer[1] = Integer.parseInt(date_split[0].substring(4, 6));
+		buffer[2] = Integer.parseInt(date_split[0].substring(6, 8));
+		buffer[3] = Integer.parseInt(date_split[1].substring(0, 2));
+		buffer[4] = Integer.parseInt(date_split[1].substring(2, 4));
+		buffer[5] = Integer.parseInt(date_split[1].substring(4, 6));
+		return buffer;
+	}
+	
+	public int compareTo(Event event) {
+		int date1[] = splitDate(attrib.getVal("DTSTART"));
+		@SuppressWarnings("deprecation")
+		Date date1_Date = new Date(date1[0], date1[1], date1[2], date1[3], date1[4], date1[5]);
+		
+		int date2[] = splitDate(event.getVal("DTSTART"));
+		@SuppressWarnings("deprecation")
+		Date date2_Date = new Date(date2[0], date2[1], date2[2], date2[3], date2[4], date2[5]);
+		
+		return date1_Date.compareTo(date2_Date);
+	}
+	
 	public String printEvent() {
 		String buffer = "";
-		buffer = attrib.getVal("SUMMARY") + " ( " + attrib.getVal("DTSTART") + " - " + attrib.getVal("DTEND") + " )" + "\n";
+		buffer = "[ " + attrib.getVal("SUMMARY") + " ] (" + translateDate(attrib.getVal("DTSTART")) + " --> " + translateDate(attrib.getVal("DTEND")) + ")" + "\n";
 		buffer = buffer + attrib.getVal("LOCATION") + "\n";
 		buffer = buffer + "\n";
 		buffer = buffer + attrib.getVal("DESCRIPTION") + "\n";
+		buffer = buffer + "\n";
+		buffer = buffer + attrib.getVal("COMMENT") + "\n";
 		buffer = buffer + "\n";
 		
 		return buffer;
@@ -54,33 +104,5 @@ public class Event implements Comparable<Event> {
 	public String toString() {
 		String buffer = "BEGIN:VEVENT\n" + attrib.toString() + "END:VEVENT\n";
 		return buffer;
-	}
-
-	public int compareTo(Event event) {
-		// TODO Auto-generated method stub
-		//return 0;
-		String date1 = attrib.getVal("DTSTART");
-		String date1_split[] = date1.split("T");
-		int date1_Year = Integer.parseInt(date1_split[0].substring(0, 3));
-		int date1_Month = Integer.parseInt(date1_split[0].substring(4, 5));
-		int date1_Day = Integer.parseInt(date1_split[0].substring(6, 7));
-		int date1_Hour = Integer.parseInt(date1_split[1].substring(0, 1));
-		int date1_Minute = Integer.parseInt(date1_split[1].substring(2, 3));
-		int date1_Second = Integer.parseInt(date1_split[1].substring(4, 5));
-		@SuppressWarnings("deprecation")
-		Date date1_Date = new Date(date1_Year, date1_Month, date1_Day, date1_Hour, date1_Minute, date1_Second);
-		
-		String date2 = event.getVal("DTSTART");
-		String date2_split[] = date2.split("T");
-		int date2_Year = Integer.parseInt(date2_split[0].substring(0, 3));
-		int date2_Month = Integer.parseInt(date2_split[0].substring(4, 5));
-		int date2_Day = Integer.parseInt(date2_split[0].substring(6, 7));
-		int date2_Hour = Integer.parseInt(date2_split[1].substring(0, 1));
-		int date2_Minute = Integer.parseInt(date2_split[1].substring(2, 3));
-		int date2_Second = Integer.parseInt(date2_split[1].substring(4, 5));
-		@SuppressWarnings("deprecation")
-		Date date2_Date = new Date(date2_Year, date2_Month, date2_Day, date2_Hour, date2_Minute, date2_Second);
-		
-		return date1_Date.compareTo(date2_Date);
 	}
 }

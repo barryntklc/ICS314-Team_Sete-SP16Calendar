@@ -10,16 +10,6 @@ public class EventTest extends TestCase {
 		//tests Event()
 		
 		Event event1 = new Event();
-		//assertEquals("", event1.getTitle());
-		//assertEquals(null, event1.getDateStart());
-		//assertEquals(null, event1.getDateEnd());
-		//assertEquals(null, event1.getTimeStart());
-		//assertEquals(null, event1.getTimeEnd());
-		//assertEquals("", event1.getDescription());
-		//assertEquals("PUBLIC", event1.getClassification());
-		//assertEquals(0.0f, event1.getLatitude());
-		//assertEquals(0.0f, event1.getLongitude());
-		//assertEquals(null, event1.getFileName());
 		assertEquals("", event1.getVal("SUMMARY"));
 		assertEquals("", event1.getVal("DESCRIPTION"));
 		assertEquals("", event1.getVal("COMMENT"));

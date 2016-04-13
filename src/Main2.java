@@ -34,7 +34,22 @@ public class Main2 {
 		if (args.length == 1) {
 			filename = args[0];
 		}
-
+		/*
+		System.out.println(new Event().translateMonth(0));
+		System.out.println(new Event().translateMonth(1));
+		System.out.println(new Event().translateMonth(2));
+		System.out.println(new Event().translateMonth(3));
+		System.out.println(new Event().translateMonth(4));
+		System.out.println(new Event().translateMonth(5));
+		System.out.println(new Event().translateMonth(6));
+		System.out.println(new Event().translateMonth(7));
+		System.out.println(new Event().translateMonth(8));
+		System.out.println(new Event().translateMonth(9));
+		System.out.println(new Event().translateMonth(10));
+		System.out.println(new Event().translateMonth(11));
+		System.out.println(new Event().translateMonth(12));
+		System.out.println(new Event().translateMonth(13));
+		*/
 		mainMenu();
 	}
 
@@ -214,6 +229,7 @@ public class Main2 {
 
 							//sort events
 							cal.sortEvents();
+							cal.calcGCD();
 						} else {
 							//read calendar attributes
 							KVList calAttrib = new KVList();
@@ -435,40 +451,4 @@ public class Main2 {
 		}
 		return true;
 	}
-	/*
-<<<<<<< HEAD
-	
-	// TODO add a menu where users can choose to add multiple events before
-	// quitting.
-	//to be placed where we will sorting function will be.  	
-//	public void calcGCD() {
-//  an idea of how it would work?
-// TODO: declare list structure to get events 
-//	    // while(there is still a next event) {
-//	      if( //TODO: getDateStart equals ( next events getDateStart )) {
-//	        Double lat1 = (double) first.getVal("LATITUDE");
-//	        Double long1 = (double) first.getVal("LONGITUTE");
-//	        Double lat2 = (double) next.getVal("LATITUDE");
-//	        Double long2 = (double) next.getVal("LONGITUTE");
-//	        if(lat1 != null && long1 != null && lat2 != null && long2 != null) {
-//	          float dist, km;
-//	          double earthRadius = 3958.75; // miles (or 6371.0 kilometers)
-//			      double dLat = Math.toRadians(lat2-lat1);
-//			      double dLng = Math.toRadians(long2-long1);
-//			      double sindLat = Math.sin(dLat / 2);
-//			      double sindLng = Math.sin(dLng / 2);
-//			      double a = Math.pow(sindLat, 2) + Math.pow(sindLng, 2)
-//			        	            * Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2));
-//			      double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-//			      dist = (float) (earthRadius * c);
-//	          km = (float) (dist * 1.60934);
-//	          
-//	          first.setVal("COMMENT","The great circle distance to your next event is " + dist + " miles(or " + km + "km).");    
-//	        }
-//	      }
-//	      TODO: increment index of array or for loop later idgaf. 
-//	    }
-//	  }
-=======
->>>>>>> origin/master*/
 }
