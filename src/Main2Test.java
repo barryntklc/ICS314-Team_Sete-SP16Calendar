@@ -6,18 +6,21 @@ import junit.framework.TestCase;
 
 public class Main2Test extends TestCase{
 
+	// Test if input is a float
 	public void testIsFloat() {
 		assertFalse("Not Float Input\n", Main2.isFloat("sushi"));
 		assertFalse("Not Float Input\n", Main2.isFloat("34k432"));
 		assertTrue("It's a Float\n", Main2.isFloat("2343.45"));
 	}
 	
+	// Test if input is a valid date in the right format
 	public void testIsValidDate() {
 		assertFalse("Invalid Date!\n", Main2.isValidDate("sushi"));
 		assertFalse("Invalid Date!\n", Main2.isValidDate("20161459"));
 		assertTrue("Date is Valid!\n", Main2.isValidDate("20160229"));
 	}
 	
+	// Test if input is a valid time in the right format
 	public void testIsValidTime() {
 		assertFalse("Invalid Time!\n", Main2.isValidTime("sushi"));
 		assertFalse("Invalid Time!\n", Main2.isValidTime("157900"));

@@ -62,51 +62,51 @@ public class ICalendar {
 	public void calcGCD() {
 		// if there are at least two events in the list
 		if (events.size() >= 2) {
-
 			//for each event until the event before the last
 			for (int i = 0; i < events.size() - 1; i++) {
-				// if( //TODO: getDateStart equals ( next events getDateStart ))
-				// {
-
-				String s1 = events.get(i).getVal("GEO");
-				String s2 = events.get(i + 1).getVal("GEO");
-				//if GEO is blank for either event
-				if (s1.equals("") || s1.equals(null) || s2.equals("") || s2.equals(null)) {
-					// do nothing
+				String date1 = events.get(i).getVal("DTEND");
+				String date2 = events.get(i+1).getVal("DTSTART");
+				
+				// TODO: comparison seems to be not working
+				if(date1.equals(date2)) { 
+					String s1 = events.get(i).getVal("GEO");
+					String s2 = events.get(i + 1).getVal("GEO");
 					
-				//else if date difference is too great
-				//} else if () {
-					
-				//else input comment normally
-				} else {
-					String geo1[] = events.get(i).getVal("GEO").split(";");
-					double lat1 = Double.parseDouble(geo1[0]);
-					double long1 = Double.parseDouble(geo1[1]);
-					String geo2[] = events.get(i + 1).getVal("GEO").split(";");
-					double lat2 = Double.parseDouble(geo2[0]);
-					double long2 = Double.parseDouble(geo2[1]);
+					//if GEO is blank for either event
+					if (s1.equals("") || s1.equals(null) || s2.equals("") || s2.equals(null)) {
+						events.get(i).setVal("COMMENT", "Not enough information!");
+						
+					//else input comment normally
+					} else {
+						String geo1[] = events.get(i).getVal("GEO").split(";");
+						double lat1 = Double.parseDouble(geo1[0]);
+						double long1 = Double.parseDouble(geo1[1]);
+						String geo2[] = events.get(i + 1).getVal("GEO").split(";");
+						double lat2 = Double.parseDouble(geo2[0]);
+						double long2 = Double.parseDouble(geo2[1]);
+	
+						float dist, km;
+						double earthRadius = 3958.75; // miles (or 6371.0
+														// kilometers)
+						double dLat = Math.toRadians(lat2 - lat1);
+						double dLng = Math.toRadians(long2 - long1);
+						double sindLat = Math.sin(dLat / 2);
+						double sindLng = Math.sin(dLng / 2);
+						double a = Math.pow(sindLat, 2)
+								+ Math.pow(sindLng, 2) * Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2));
+						double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+						dist = (float) (earthRadius * c);
+						km = (float) (dist * 1.60934);
+	
+						String s = "The great circle distance to your next event is " + dist + " miles(or " + km + "km).";
+						System.out.println(s);
+						events.get(i).setVal("COMMENT", s);
 
-					float dist, km;
-					double earthRadius = 3958.75; // miles (or 6371.0
-													// kilometers)
-					double dLat = Math.toRadians(lat2 - lat1);
-					double dLng = Math.toRadians(long2 - long1);
-					double sindLat = Math.sin(dLat / 2);
-					double sindLng = Math.sin(dLng / 2);
-					double a = Math.pow(sindLat, 2)
-							+ Math.pow(sindLng, 2) * Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2));
-					double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-					dist = (float) (earthRadius * c);
-					km = (float) (dist * 1.60934);
-
-					String s = "The great circle distance to your next event is " + dist + " miles(or " + km + "km).";
-					System.out.println(s);
-					events.get(i).setVal("COMMENT", s);
-
+					}
 				}
 			}
 		} else {
-			//TODO do nothing
+			events.get(0).setVal("COMMENT","Not enough events for computing distance.");
 		}
 	}
 
