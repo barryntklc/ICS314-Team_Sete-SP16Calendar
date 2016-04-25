@@ -22,24 +22,52 @@ public class Event implements Comparable<Event> {
 		attrib.setVal("CLASS", "PUBLIC");
 	}
 	
+	/**
+	 * Constructor
+	 * 
+	 * @param attrib
+	 */
 	public Event (KVList attrib) {
 		this.attrib = attrib;
 	}
 	
+	/**
+	 * getVal
+	 * 
+	 * @param key
+	 * @return
+	 */
 	public String getVal(String key) {
 		return attrib.getVal(key);
 	}
 	
+	/**
+	 * setVal
+	 * 
+	 * @param key
+	 * @param val
+	 */
 	public void setVal(String key, String val) {
 		attrib.setVal(key, val);
 	}
 	
+	/**
+	 * setVal
+	 * 
+	 * @param attribs
+	 */
 	public void setVal(KVList attribs) {
 		for (int n = 0; n < attribs.size(); n++) {
 			attrib.setVal(attrib.getKey(n), attrib.getVal(n));
 		}
 	}
 	
+	/**
+	 * formattedDate
+	 * 
+	 * @param formattedDate
+	 * @return
+	 */
 	public String translateDate (String formattedDate) {
 		int date[] = splitDate(formattedDate);
 		
@@ -52,6 +80,12 @@ public class Event implements Comparable<Event> {
 		return String.format("%02d", date[1]) + "/" + String.format("%02d", date[2]) + "/" + date[0] + " (" + date[3] + ":" + String.format("%02d", date[4]) + ":" + String.format("%02d", date[5]) + " " + AM_PM + ")";
 	}
 	
+	/**
+	 * translateMonth
+	 * 
+	 * @param monthInt
+	 * @return
+	 */
 	public String translateMonth (int monthInt) {
 		String[] monthName = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
 		if (monthInt < 1 || monthInt > 12) {
@@ -62,20 +96,27 @@ public class Event implements Comparable<Event> {
 	}
 	
 	/**
-	 * YEAR, MONTH, DAY, HOUR, MINUTE, SECOND
+	 * splitDate
+	 * 
+	 * Splits an ics Date String into separate values
 	 */
 	public int[] splitDate (String date) {
 		int buffer[] = new int[6];
 		String date_split[] = date.split("T");
-		buffer[0] = Integer.parseInt(date_split[0].substring(0, 4));
-		buffer[1] = Integer.parseInt(date_split[0].substring(4, 6));
-		buffer[2] = Integer.parseInt(date_split[0].substring(6, 8));
-		buffer[3] = Integer.parseInt(date_split[1].substring(0, 2));
-		buffer[4] = Integer.parseInt(date_split[1].substring(2, 4));
-		buffer[5] = Integer.parseInt(date_split[1].substring(4, 6));
+		buffer[0] = Integer.parseInt(date_split[0].substring(0, 4)); //YEAR
+		buffer[1] = Integer.parseInt(date_split[0].substring(4, 6)); //MONTH
+		buffer[2] = Integer.parseInt(date_split[0].substring(6, 8)); //DAY
+		buffer[3] = Integer.parseInt(date_split[1].substring(0, 2)); //HOUR
+		buffer[4] = Integer.parseInt(date_split[1].substring(2, 4)); //MINUTE
+		buffer[5] = Integer.parseInt(date_split[1].substring(4, 6)); //SECOND
 		return buffer;
 	}
 	
+	/**
+	 * compareTo
+	 * 
+	 * Compares the starting date and time of this event with another, for the purpose of ordering it.
+	 */
 	public int compareTo(Event event) {
 		int date1[] = splitDate(attrib.getVal("DTSTART"));
 		@SuppressWarnings("deprecation")
@@ -88,6 +129,10 @@ public class Event implements Comparable<Event> {
 		return date1_Date.compareTo(date2_Date);
 	}
 	
+	/**
+	 * printEvent
+	 * @return
+	 */
 	public String printEvent() {
 		String buffer = "";
 		buffer = "[ " + attrib.getVal("SUMMARY") + " ] (" + translateDate(attrib.getVal("DTSTART")) + " --> " + translateDate(attrib.getVal("DTEND")) + ")" + "\n";
@@ -101,6 +146,9 @@ public class Event implements Comparable<Event> {
 		return buffer;
 	}
 
+	/**
+	 * toString
+	 */
 	public String toString() {
 		String buffer = "BEGIN:VEVENT\n" + attrib.toString() + "END:VEVENT\n";
 		return buffer;
