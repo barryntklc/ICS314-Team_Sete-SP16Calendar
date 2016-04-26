@@ -172,7 +172,7 @@ public class Main2 {
 	private static void loadFile() {
 		String filePath = "";
 
-		System.out.print("New filename: ");
+		System.out.print("Load file: ");
 		filePath = userInput.nextLine();
 		// if the given filename is valid
 		if (filePath != "" || filePath != "\n") {
@@ -359,7 +359,7 @@ public class Main2 {
 			}
 			details.add("GEO", lat_input + ";" + lon_input);
 		} else {
-			System.out.println("No geographic location entered");
+			System.out.println("No geographic location entered.");
 		}
 
 		// CLASS
