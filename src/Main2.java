@@ -330,7 +330,7 @@ public class Main2 {
 		}
 		String dtend = endDateInput + "T" + endTimeInput;
 		details.add("DTEND", dtend);
-
+		
 		// LOCATION
 		System.out.print("Location: ");
 		details.add("LOCATION", userInput.nextLine());
