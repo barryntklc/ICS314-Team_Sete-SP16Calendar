@@ -19,6 +19,9 @@ public class ICalendar {
 	private KVList attrib = new KVList();
 	private ArrayList<Event> events = new ArrayList<Event>();
 
+	/**
+	 * ICalendar
+	 */
 	public ICalendar() {
 		attrib.add("VERSION", "2.0");
 		attrib.add("PRODID", "-//Google Inc//Google Calendar 70.9054//EN");
@@ -36,22 +39,41 @@ public class ICalendar {
 		attrib.add("X-WR-CALDESC", "");
 	}
 
+	/**
+	 * setAttrib
+	 * @param list
+	 */
 	public void setAttrib(KVList list) {
 		attrib = list;
 	}
 
+	/**
+	 * addEvent
+	 * @param attrib
+	 */
 	public void addEvent(KVList attrib) {
 		events.add(new Event(attrib));
 	}
 
+	/**
+	 * setName
+	 * @param name
+	 */
 	public void setName(String name) {
 		attrib.setVal("X-WR-CALNAME", name);
 	}
 
+	/**
+	 * sortEvents
+	 */
 	public void sortEvents() {
 		Collections.sort(events);
 	}
 
+	/**
+	 * size
+	 * @return
+	 */
 	public int size() {
 		return events.size();
 	}
@@ -122,6 +144,12 @@ public class ICalendar {
 		}
 	}
 	
+	/**
+	 * splitDate
+	 * 
+	 * @param date
+	 * @return
+	 */
 	public int[] splitDate (String date) {
 		int buffer[] = new int[6];
 		String date_split[] = date.split("T");
@@ -134,14 +162,14 @@ public class ICalendar {
 		return buffer;
 	}
 	
+	/**
+	 * withinThreshold
+	 * 
+	 * @param date1
+	 * @param date2
+	 * @return
+	 */
 	public boolean withinThreshold (int[] date1, int[] date2) {
-		
-		//System.out.println(date2[0] - date1[0]);
-		//System.out.println(date2[1] - date1[1]);
-		//System.out.println(date2[2] - date1[2]);
-		//System.out.println(date2[3] - date1[3]);
-		//System.out.println(date2[4] - date1[4]);
-		//System.out.println(date2[5] - date1[5]);
 		
 		if (date1[0] == date2[0] && date1[1] == date2[1] && date1[2] == date2[2]) {
 			return true;
@@ -149,24 +177,13 @@ public class ICalendar {
 			return false;
 		}
 		
-		/*
-		if (date2[0] - date1[0] >= 1 && date2[1] - date1[1] >= 1 && date2[3] - date1[3] >= 1) {
-			
-		}
-		
-		for (int x: date1) {
-			System.out.print(x + ", ");
-		}
-		System.out.println();
-		System.out.println((date1[3] * 60 * 60) + (date1[4] * 60) + date1[5]);
-		for (int x: date2) {
-			System.out.print(x + ", ");
-		}
-		System.out.println();
-		System.out.println((date2[3] * 60 * 60) + (date2[4] * 60) + date2[5]);
-		*/
+		//TODO Add handler for overlap
 	}
+	
 	//when reading in files
+	/**
+	 * createArray
+	 */
 	public static void createArray(){
 		String[][] tzArray = new String[87][2]; //87 = number of time zones, 2 = timezone UTC offset & timezone name
 		String fileName = "timezones.txt"; //file with timezones listed
@@ -211,6 +228,10 @@ public class ICalendar {
 		}
 	}
 
+	/**
+	 * printCal
+	 * @return
+	 */
 	public String printCal() {
 		String buffer = "";
 		for (int i = 0; i < events.size(); i++) {
@@ -222,6 +243,9 @@ public class ICalendar {
 		return buffer;
 	}
 
+	/**
+	 * toString
+	 */
 	public String toString() {
 		String buffer = "BEGIN:VCALENDAR" + "\n";
 		buffer = buffer + attrib.toString();
