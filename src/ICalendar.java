@@ -1,7 +1,5 @@
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
-import java.util.GregorianCalendar;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -229,14 +227,15 @@ public class ICalendar {
 	}
 
 	/**
-	 * printCal
-	 * @return
+	 * toStringReadable
+	 * 
+	 * @return a human-readable list of Events
 	 */
-	public String printCal() {
+	public String toStringReadable() {
 		String buffer = "";
 		for (int i = 0; i < events.size(); i++) {
 			buffer = buffer + "______________________________________________________________" + "\n";
-			buffer = buffer + events.get(i).printEvent();
+			buffer = buffer + events.get(i).toStringReadable();
 		}
 		buffer = buffer + "______________________________________________________________" + "\n";
 
@@ -245,6 +244,8 @@ public class ICalendar {
 
 	/**
 	 * toString
+	 * 
+	 * @return an ics-formatted representation of this ICalendar
 	 */
 	public String toString() {
 		String buffer = "BEGIN:VCALENDAR" + "\n";

@@ -25,7 +25,9 @@ public class Event implements Comparable<Event> {
 	/**
 	 * Constructor
 	 * 
-	 * @param attrib
+	 * given a list of attributes, creates a new Event
+	 * 
+	 * @param attrib - a list of attributes
 	 */
 	public Event (KVList attrib) {
 		this.attrib = attrib;
@@ -98,7 +100,7 @@ public class Event implements Comparable<Event> {
 	/**
 	 * splitDate
 	 * 
-	 * Splits an ics Date String into separate values
+	 * Splits a .ics-formatted date String into separate values
 	 */
 	public int[] splitDate (String date) {
 		int buffer[] = new int[6];
@@ -116,6 +118,8 @@ public class Event implements Comparable<Event> {
 	 * compareTo
 	 * 
 	 * Compares the starting date and time of this event with another, for the purpose of ordering it.
+	 * 
+	 * @return the compareTo value of two Date objects.
 	 */
 	public int compareTo(Event event) {
 		int date1[] = splitDate(attrib.getVal("DTSTART"));
@@ -130,10 +134,11 @@ public class Event implements Comparable<Event> {
 	}
 	
 	/**
-	 * printEvent
-	 * @return
+	 * toStringReadable
+	 * 
+	 * @return a human-readable record of an Event.
 	 */
-	public String printEvent() {
+	public String toStringReadable() {
 		String buffer = "";
 		buffer = "[ " + attrib.getVal("SUMMARY") + " ] (" + translateDate(attrib.getVal("DTSTART")) + " --> " + translateDate(attrib.getVal("DTEND")) + ")" + "\n";
 		buffer = buffer + attrib.getVal("LOCATION") + "\n";
@@ -148,6 +153,8 @@ public class Event implements Comparable<Event> {
 
 	/**
 	 * toString
+	 * 
+	 * @return the Event's attributes as formatted data.
 	 */
 	public String toString() {
 		String buffer = "BEGIN:VEVENT\n" + attrib.toString() + "END:VEVENT\n";

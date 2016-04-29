@@ -160,7 +160,7 @@ public class Main2 {
 	public static void listEvents() {
 		if (cal.size() > 0) {
 			System.out.println("Listing all recorded events...");
-			System.out.println(cal.printCal());
+			System.out.println(cal.toStringReadable());
 		} else {
 			System.out.println("ERROR: There are no events!");
 		}
