@@ -11,11 +11,18 @@ import java.util.Date;
  */
 public class Event implements Comparable<Event> {
 	private KVList attrib = new KVList();
+	private KVList preAttrib = new KVList();
 	
 	/**
 	 * Constructor
 	 */
 	public Event() {
+		preAttrib.add("BEGIN", "VTIMEZONE");
+		preAttrib.add("TZID","GMT-10:00");
+		preAttrib.add("BEGIN", "STANDARD");
+		preAttrib.add("END", "STANDARD");
+		preAttrib.add("END", "VTIMEZONE");
+		
 		attrib.setVal("SUMMARY", "");
 		attrib.setVal("DESCRIPTION", "");
 		attrib.setVal("COMMENT", "");
@@ -128,6 +135,17 @@ public class Event implements Comparable<Event> {
 		
 		return date1_Date.compareTo(date2_Date);
 	}
+	/**
+	 * setTimeZone
+	 * @param TZID
+	 */
+	public void setTimeZone(String tzid){
+		preAttrib.add("BEGIN", "VTIMEZONE");
+		preAttrib.add("TZID",tzid);
+		preAttrib.add("BEGIN", "STANDARD");
+		preAttrib.add("END", "STANDARD");
+		preAttrib.add("END", "VTIMEZONE");
+	}
 	
 	/**
 	 * printEvent
@@ -150,7 +168,7 @@ public class Event implements Comparable<Event> {
 	 * toString
 	 */
 	public String toString() {
-		String buffer = "BEGIN:VEVENT\n" + attrib.toString() + "END:VEVENT\n";
+		String buffer = preAttrib.toString() + "BEGIN:VEVENT\n" + attrib.toString() + "END:VEVENT\n";
 		return buffer;
 	}
 }

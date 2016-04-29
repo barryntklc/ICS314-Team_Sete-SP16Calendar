@@ -31,9 +31,9 @@ public class ICalendar {
 		attrib.add("BEGIN", "VTIMEZONE");
 		attrib.add("TZID", "Pacific/Honolulu");
 		attrib.add("BEGIN", "STANDARD");
-		attrib.add("TZOFFSETFROM", "-1000");
-		attrib.add("TZOFFSETTO", "-1000");
-		attrib.add("TZNAME", "HST");
+//		attrib.add("TZOFFSETFROM", "-1000");
+//		attrib.add("TZOFFSETTO", "-1000");
+//		attrib.add("TZNAME", "HST");
 		attrib.add("END", "STANDARD");
 		attrib.add("END", "VTIMEZONE");
 		attrib.add("X-WR-CALDESC", "");
@@ -180,54 +180,7 @@ public class ICalendar {
 		//TODO Add handler for overlap
 	}
 	
-	//when reading in files
-	/**
-	 * createArray
-	 */
-	public static void createArray(){
-		String[][] tzArray = new String[87][2]; //87 = number of time zones, 2 = timezone UTC offset & timezone name
-		String fileName = "timezones.txt"; //file with timezones listed
-		String currentLine = "";
-		int count = 0;
-		
-		// Receives input from user about the file to be read
-		try {
-			// FileReader will read the text file
-			FileReader fileReader = new FileReader(fileName);
-		
-			// Wrap FileReader in BufferedReader
-			BufferedReader bufferedReader = new BufferedReader(fileReader);
-			
-			
-			// Read file line by line until the end
-			while((currentLine = bufferedReader.readLine()) != null){ //might change null to END:VCALENDAR
-				// System.out.println(currentLine); // Used for testing, just prints each line to screen
-				
-				// Format of timezones on timezone.txt file: (UTC-1000) Hawaii
-				// Timezone array [*][0] = UTC offset
-				// Timezone array [*][1] = timezone name
-				tzArray[count][0] = currentLine.substring(currentLine.indexOf('(')+4, currentLine.indexOf(')'));
-				tzArray[count][1] = currentLine.substring(currentLine.indexOf(')')+2);
-				
-				// Next line is for testing
-				// System.out.println(tzArray[count][0] + "\t" + tzArray[count][1]);
-				
-				count++;
-			}
-		// Close files
-		bufferedReader.close();
-		}
-				
-		// Outputs error message is fileName is not found
-		catch(FileNotFoundException ex1){
-			System.out.println("Unable to open file '" + fileName + "'.");
-		}
-		// Outputs error message if fileName cannot be read
-		catch(IOException ex2){
-			System.out.println("Error reading file '" + fileName + "'.");
-		}
-	}
-
+	
 	/**
 	 * printCal
 	 * @return
