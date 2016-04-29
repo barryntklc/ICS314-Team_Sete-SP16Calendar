@@ -23,6 +23,14 @@ public class KVList {
 	public void add(String str[]) {
 		pairs.add(new KVPair(str));
 	}
+	
+	public void remove(String gKey){
+		int index = getIndex(gKey);
+//		System.out.println("INDEX!: "+index);
+		if(index!=-1){
+		pairs.remove(index);
+		}
+	}
 	public String toString() {
 		String buffer = "";
 		
@@ -31,6 +39,7 @@ public class KVList {
 		}
 		return buffer;
 	}
+	
 	
 	//get key:value pair
 	public String[] getPair(int index) {
@@ -59,6 +68,16 @@ public class KVList {
 	
 	public String getVal(int index) {
 		return pairs.get(index).val;
+	}
+	
+	public int getIndex(String gKey){
+		int ind = -1;
+		for(int i = 0; !pairs.get(i).key.equals(gKey);i++){
+			ind=i+1;
+		}
+		
+		
+		return ind;
 	}
 	
 	//set by key, first result

@@ -28,14 +28,14 @@ public class ICalendar {
 		attrib.add("CALSCALE", "GREGORIAN");
 		attrib.add("METHOD", "PUBLISH");
 		attrib.add("X-WR-CALNAME", "TESTIMPORT");
-		attrib.add("BEGIN", "VTIMEZONE");
-		attrib.add("TZID", "Pacific/Honolulu");
-		attrib.add("BEGIN", "STANDARD");
+//		attrib.add("BEGIN", "VTIMEZONE");
+//		attrib.add("TZID", "Pacific/Honolulu");
+//		attrib.add("BEGIN", "STANDARD");
 //		attrib.add("TZOFFSETFROM", "-1000");
 //		attrib.add("TZOFFSETTO", "-1000");
 //		attrib.add("TZNAME", "HST");
-		attrib.add("END", "STANDARD");
-		attrib.add("END", "VTIMEZONE");
+//		attrib.add("END", "STANDARD");
+//		attrib.add("END", "VTIMEZONE");
 		attrib.add("X-WR-CALDESC", "");
 	}
 

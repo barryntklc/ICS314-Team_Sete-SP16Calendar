@@ -1,3 +1,5 @@
+
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -350,7 +352,6 @@ public class Main2 {
 					displayTimeZone();
 					System.out.print("Please select a timezone (enter signed number only)\n: ");
 					tzidAnswer = userInput.nextLine();
-					System.out.print("HERES TZIDANSWER!: "+tzidAnswer);
 									
 			}
 			String tzidFrontForm = tzidAnswer.substring(0,tzidAnswer.length()-2);
@@ -358,7 +359,7 @@ public class Main2 {
 			
 			timezone.setID("GMT"+tzidFrontForm+":"+tzidBackForm);
 			//System.out.println("Display name is : " + timezone.getDisplayName());
-			cal.setTimeZone(timezone.getID());
+			details.add("TZID",timezone.getID());
 		}
 		
 		
@@ -451,6 +452,7 @@ public class Main2 {
 		// new_event.setComment(gcd calculation from list of events);
 		// System.out.println(answers.toString());
 		// return new_event;
+		
 		return details;
 	}
 

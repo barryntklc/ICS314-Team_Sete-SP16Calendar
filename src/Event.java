@@ -17,16 +17,21 @@ public class Event implements Comparable<Event> {
 	 * Constructor
 	 */
 	public Event() {
-		preAttrib.add("BEGIN", "VTIMEZONE");
-		preAttrib.add("TZID","GMT-10:00");
-		preAttrib.add("BEGIN", "STANDARD");
-		preAttrib.add("END", "STANDARD");
-		preAttrib.add("END", "VTIMEZONE");
+		preAttrib.setVal("BEGIN", "VTIMEZONE");
+		preAttrib.setVal("TZID", "Pacific/Honolulu");
+		preAttrib.setVal("BEGIN", "STANDARD");
+		preAttrib.add("TZOFFSETFROM", "-1000");
+		preAttrib.add("TZOFFSETTO", "-1000");
+//		attrib.add("TZNAME", "HST");
+		preAttrib.setVal("END", "STANDARD");
+		preAttrib.setVal("END", "VTIMEZONE");
 		
 		attrib.setVal("SUMMARY", "");
 		attrib.setVal("DESCRIPTION", "");
 		attrib.setVal("COMMENT", "");
 		attrib.setVal("CLASS", "PUBLIC");
+		System.out.print("DISPLAYS PREATTRIB in constructor"+this.preAttrib.toString());
+		
 	}
 	
 	/**
@@ -36,6 +41,7 @@ public class Event implements Comparable<Event> {
 	 */
 	public Event (KVList attrib) {
 		this.attrib = attrib;
+	
 	}
 	
 	/**
@@ -46,6 +52,19 @@ public class Event implements Comparable<Event> {
 	 */
 	public String getVal(String key) {
 		return attrib.getVal(key);
+	}
+	public void setPreAttrib(KVList gAttrib){
+		preAttrib.add("BEGIN", "VTIMEZONE");
+		preAttrib.add("TZID", "Pacific/Honolulu");
+		preAttrib.add("BEGIN", "STANDARD");
+		preAttrib.add("TZOFFSETFROM", "-1000");
+		preAttrib.add("TZOFFSETTO", "-1000");
+		//preAttrib.add("TZNAME", "HST");
+		preAttrib.add("END", "STANDARD");
+		preAttrib.add("END", "VTIMEZONE");
+		this.preAttrib.setVal("TZID",gAttrib.getVal("TZID"));
+		this.attrib.remove("TZID");
+
 	}
 	
 	/**
@@ -135,18 +154,7 @@ public class Event implements Comparable<Event> {
 		
 		return date1_Date.compareTo(date2_Date);
 	}
-	/**
-	 * setTimeZone
-	 * @param TZID
-	 */
-	public void setTimeZone(String tzid){
-		preAttrib.add("BEGIN", "VTIMEZONE");
-		preAttrib.add("TZID",tzid);
-		preAttrib.add("BEGIN", "STANDARD");
-		preAttrib.add("END", "STANDARD");
-		preAttrib.add("END", "VTIMEZONE");
-	}
-	
+
 	/**
 	 * printEvent
 	 * @return
@@ -168,6 +176,7 @@ public class Event implements Comparable<Event> {
 	 * toString
 	 */
 	public String toString() {
+		setPreAttrib(this.attrib);
 		String buffer = preAttrib.toString() + "BEGIN:VEVENT\n" + attrib.toString() + "END:VEVENT\n";
 		return buffer;
 	}
