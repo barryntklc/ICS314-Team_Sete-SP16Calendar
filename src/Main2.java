@@ -1,10 +1,7 @@
 
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -307,15 +304,15 @@ public class Main2 {
 		// SUMMARY
 		System.out.print("Event Name: ");
 		details.add("SUMMARY", userInput.nextLine());
-
-//		// DTSTART
-//		System.out.print("Start Date (YYYYMMDD): ");
-//		String startDateInput = userInput.nextLine();
-//		while (!isValidDate(startDateInput)) {
-//			System.out.print("Incorrect Date! Please enter in the format YYYYMMDD: ");
-//			startDateInput = userInput.nextLine();
-//		}
-//		
+		
+		// DTSTART
+		System.out.print("Start Date (YYYYMMDD): ");
+		String startDateInput = userInput.nextLine();
+		while (!isValidDate(startDateInput)) {
+			System.out.print("Incorrect Date! Please enter in the format YYYYMMDD: ");
+			startDateInput = userInput.nextLine();
+		}
+		
 		System.out.print("Start Time (HHMMSS): ");
 		String startTimeInput = userInput.nextLine();
 		while (!isValidTime(startTimeInput)) {
@@ -323,24 +320,26 @@ public class Main2 {
 			startTimeInput = userInput.nextLine();
 		}
 		
-//		String dtstart = startDateInput + "T" + startTimeInput;
-//		details.add("DTSTART", dtstart);
-
-//		// DTEND
-//		System.out.print("End Date (YYYYMMDD): ");
-//		String endDateInput = userInput.nextLine();
-//		while (!isValidDate(endDateInput)) {
-//			System.out.print("Incorrect Date! Please enter in the format YYYYMMDD: ");
-//			endDateInput = userInput.nextLine();
-//		}
+		String dtstart = startDateInput + "T" + startTimeInput;
+		details.add("DTSTART", dtstart);
+		
+		// DTEND
+		System.out.print("End Date (YYYYMMDD): ");
+		String endDateInput = userInput.nextLine();
+		while (!isValidDate(endDateInput)) {
+			System.out.print("Incorrect Date! Please enter in the format YYYYMMDD: ");
+			endDateInput = userInput.nextLine();
+		}
+		
 		System.out.print("End Time (HHMMSS): ");
 		String endTimeInput = userInput.nextLine();
 		while (!isValidTime(endTimeInput)) {
 			System.out.print("Incorrect Time! Please enter in the format HHMMSS: ");
 			endTimeInput = userInput.nextLine();
 		}
-//		String dtend = endDateInput + "T" + endTimeInput;
-//		details.add("DTEND", dtend);
+		
+		String dtend = endDateInput + "T" + endTimeInput;
+		details.add("DTEND", dtend);
 		
 		//Timezone Selection
 		
@@ -348,6 +347,10 @@ public class Main2 {
 		
 		String tzidAnswer = userInput.nextLine();
 		TimeZone timezone = TimeZone.getDefault();
+		while(tzidAnswer.charAt(0)!='Y'&& tzidAnswer.charAt(0)!='y'&&tzidAnswer.charAt(0)!='N'&& tzidAnswer.charAt(0)!='n') {
+			System.out.println("Please enter y or n: ");
+			tzidAnswer = userInput.nextLine();
+		}
 		if(tzidAnswer.charAt(0)=='Y'|| tzidAnswer.charAt(0)=='y'){
 			while(!isValidTZ(tzidAnswer)){
 	
@@ -363,36 +366,9 @@ public class Main2 {
 			//System.out.println("Display name is : " + timezone.getDisplayName());
 			details.add("TZID",timezone.getID());
 		}
-		
-		
-
-		
-		//Renovating Date start and date end after time zone entry. 
-		
-		
-		
-		// DTSTART
-		System.out.print("Start Date (YYYYMMDD): ");
-		String startDateInput = userInput.nextLine();
-		while (!isValidDate(startDateInput)) {
-			System.out.print("Incorrect Date! Please enter in the format YYYYMMDD: ");
-			startDateInput = userInput.nextLine();
+		else if(tzidAnswer.charAt(0)=='N'|| tzidAnswer.charAt(0)=='n') {
+			details.add("TZID", "GMT-1000");
 		}
-		
-		
-		String dtstart = startDateInput + "T" + startTimeInput;
-		details.add("DTSTART", dtstart);
-		
-		// DTEND
-		System.out.print("End Date (YYYYMMDD): ");
-		String endDateInput = userInput.nextLine();
-		while (!isValidDate(endDateInput)) {
-			System.out.print("Incorrect Date! Please enter in the format YYYYMMDD: ");
-			endDateInput = userInput.nextLine();
-		}
-		
-		String dtend = endDateInput + "T" + endTimeInput;
-		details.add("DTEND", dtend);
 		
 		// LOCATION
 		System.out.print("Location: ");
@@ -448,12 +424,6 @@ public class Main2 {
 		System.out.print("Description: ");
 		// new_event.setDescription(userInput.nextLine());
 		details.add("DESCRIPTION", userInput.nextLine());
-
-		// set comment to calculation from great circle distance don't know how
-		// that will work with the list.
-		// new_event.setComment(gcd calculation from list of events);
-		// System.out.println(answers.toString());
-		// return new_event;
 		
 		return details;
 	}
@@ -661,7 +631,7 @@ public class Main2 {
 		
 				return true;
 			}
-		}catch (Exception e){
+		} catch (Exception e) {
 			return false;
 		}
 			return true;
