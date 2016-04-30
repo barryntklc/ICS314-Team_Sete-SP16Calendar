@@ -86,6 +86,7 @@ public class ICalendar {
 	 * unless GEO is blank, or the date difference is too great
 	 */
 	public void calcGCD() {
+		
 		// if there are at least two events in the list
 		if (events.size() >= 2) {
 			//for each event until the event before the last
@@ -102,12 +103,10 @@ public class ICalendar {
 					
 					//if GEO is blank for either event
 					if (s1 == null || s1.equals("") || s2 == null || s2.equals("")) {
-						events.get(i).setVal("COMMENT", "Not enough information!");
+						events.get(i).setVal("DESCRIPTION", events.get(i).getVal("DESCRIPTION") + "\tNot enough information!");
 						
 					//else input comment normally
-					} 
-					
-					else {
+					} else {
 						String geo1[] = events.get(i).getVal("GEO").split(";");
 						float lat1 = Float.parseFloat(geo1[0]);
 						double long1 = Float.parseFloat(geo1[1]);
@@ -130,23 +129,22 @@ public class ICalendar {
 	
 						String s = "The great circle distance to your next event is " + dist + " miles(or " + km + "km).";
 						System.out.println(s);
-						events.get(i).setVal("COMMENT", s);
-
+						events.get(i).setVal("DESCRIPTION", events.get(i).getVal("DESCRIPTION") + '\t' + s);
 					}
 				} else {
-					events.get(i).setVal("COMMENT", "Not the same date!");
+					events.get(i).setVal("DESCRIPTION", events.get(i).getVal("DESCRIPTION") + "\tNot the same date!");
 				}
 			}
 		} else {
-			events.get(0).setVal("COMMENT","Not enough events for computing distance.");
+			events.get(0).setVal("DESCRIPTION", events.get(0).getVal("DESCRIPTION") + "\tNot enough events for computing distance.");
 		}
 	}
 	
 	/**
 	 * splitDate
 	 * 
-	 * @param date
-	 * @return
+	 * @param date a given date string
+	 * @return the YYYYMMDDTHHMMSS string in an int array
 	 */
 	public int[] splitDate (String date) {
 		int buffer[] = new int[6];
@@ -174,10 +172,7 @@ public class ICalendar {
 		} else {
 			return false;
 		}
-		
-		//TODO Add handler for overlap
 	}
-	
 	
 	/**
 	 * toStringReadable
