@@ -27,7 +27,7 @@ public class KVList {
 	public void remove(String gKey){
 		int index = getIndex(gKey);
 //		System.out.println("INDEX!: "+index);
-		if(index!=-1){
+		if(index!=-1&&index<pairs.size()){
 		pairs.remove(index);
 		}
 	}
@@ -72,7 +72,7 @@ public class KVList {
 	
 	public int getIndex(String gKey){
 		int ind = -1;
-		for(int i = 0; !pairs.get(i).key.equals(gKey);i++){
+		for(int i = 0; !pairs.get(i).key.equals(gKey)&&i<pairs.size()-1;i++){
 			ind=i+1;
 		}
 		
