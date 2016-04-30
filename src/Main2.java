@@ -41,22 +41,6 @@ public class Main2 {
 		if (args.length == 1) {
 			filename = args[0];
 		}
-		/*
-		System.out.println(new Event().translateMonth(0));
-		System.out.println(new Event().translateMonth(1));
-		System.out.println(new Event().translateMonth(2));
-		System.out.println(new Event().translateMonth(3));
-		System.out.println(new Event().translateMonth(4));
-		System.out.println(new Event().translateMonth(5));
-		System.out.println(new Event().translateMonth(6));
-		System.out.println(new Event().translateMonth(7));
-		System.out.println(new Event().translateMonth(8));
-		System.out.println(new Event().translateMonth(9));
-		System.out.println(new Event().translateMonth(10));
-		System.out.println(new Event().translateMonth(11));
-		System.out.println(new Event().translateMonth(12));
-		System.out.println(new Event().translateMonth(13));
-		*/
 		mainMenu();
 	}
 
@@ -99,8 +83,7 @@ public class Main2 {
 				if (filename == "" || filename == "\n") {
 					filename = "newcalendar.ics";
 				}
-				// System.out.println("Save file name changed to \"" +
-				// "\".");
+
 			} else if (choice == 2) { // add event
 				System.out.println("Creating an event...");
 				addEvent();
@@ -174,7 +157,7 @@ public class Main2 {
 	}
 
 	/**
-	 * TODO loads a .ics file
+	 * Loads a .ics file
 	 */
 	private static void loadFile() {
 		String filePath = "";
@@ -221,7 +204,7 @@ public class Main2 {
 							for (int iter1 = 1; iter1 < event_begin.get(0); iter1++) {
 								calAttrib.add(fileContents.get(iter1).split(":"));
 							}
-							//TODO write calendar attributes to ICalendar object
+							
 							
 							//read event attributes
 							for (int iter2 = 0; iter2 < event_begin.size(); iter2++) {
@@ -243,7 +226,7 @@ public class Main2 {
 							for (int x = 0; x < fileContents.size() - 1; x++) {
 								calAttrib.add(fileContents.get(x).split(":"));
 							}
-							//TODO write calendar attributes to ICalendar object
+							
 							System.out.println("NOTE: File did not contain any events.");
 						}
 					} else {
@@ -260,8 +243,6 @@ public class Main2 {
 				e.printStackTrace();
 			}
 
-			//System.out.println(pairs);
-			//System.out.println(pairs.getVal("METHOD"));
 		} else {
 			System.out.println("ERROR: Invalid filename!");
 		}
@@ -275,9 +256,6 @@ public class Main2 {
 	private static void saveFile() {
 		ArrayList<String> buffer = new ArrayList<String>();
 		buffer.add(cal.toString());
-
-		//System.out.println("Buffer of output to be saved:");
-		//System.out.println(buffer);
 
 		try {
 			System.out.println("Saving events to file.");
@@ -299,21 +277,12 @@ public class Main2 {
 	 * @return an Event of user input
 	 */
 	private static KVList getEventDetails() {
-		// Event new_event = new Event();
 		KVList  details = new KVList();
 
 		// SUMMARY
 		System.out.print("Event Name: ");
 		details.add("SUMMARY", userInput.nextLine());
 
-//		// DTSTART
-//		System.out.print("Start Date (YYYYMMDD): ");
-//		String startDateInput = userInput.nextLine();
-//		while (!isValidDate(startDateInput)) {
-//			System.out.print("Incorrect Date! Please enter in the format YYYYMMDD: ");
-//			startDateInput = userInput.nextLine();
-//		}
-//		
 		System.out.print("Start Time (HHMMSS): ");
 		String startTimeInput = userInput.nextLine();
 		while (!isValidTime(startTimeInput)) {
@@ -321,27 +290,16 @@ public class Main2 {
 			startTimeInput = userInput.nextLine();
 		}
 		
-//		String dtstart = startDateInput + "T" + startTimeInput;
-//		details.add("DTSTART", dtstart);
 
-//		// DTEND
-//		System.out.print("End Date (YYYYMMDD): ");
-//		String endDateInput = userInput.nextLine();
-//		while (!isValidDate(endDateInput)) {
-//			System.out.print("Incorrect Date! Please enter in the format YYYYMMDD: ");
-//			endDateInput = userInput.nextLine();
-//		}
 		System.out.print("End Time (HHMMSS): ");
 		String endTimeInput = userInput.nextLine();
 		while (!isValidTime(endTimeInput)) {
 			System.out.print("Incorrect Time! Please enter in the format HHMMSS: ");
 			endTimeInput = userInput.nextLine();
 		}
-//		String dtend = endDateInput + "T" + endTimeInput;
-//		details.add("DTEND", dtend);
+		
 		
 		//Timezone Selection
-		
 		System.out.print("Would you like to choose a timezone (y/n):");
 		
 		String tzidAnswer = userInput.nextLine();
@@ -358,14 +316,8 @@ public class Main2 {
 			String tzidBackForm = tzidAnswer.substring(tzidAnswer.length()-2);
 			
 			timezone.setID("GMT"+tzidFrontForm+":"+tzidBackForm);
-			//System.out.println("Display name is : " + timezone.getDisplayName());
 			details.add("TZID",timezone.getID());
 		}
-		
-		
-
-		
-		//Renovating Date start and date end after time zone entry. 
 		
 		
 		
@@ -423,7 +375,7 @@ public class Main2 {
 			System.out.println("No geographic location entered.");
 		}
 
-		// CLASS
+		// CLASSIFICATION
 		System.out.print("Classification (Default is PUBLIC) \n");
 		System.out.print("(1)PUBLIC, (2)PRIVATE, (3)CONFIDENTIAL, (4)iana-token, (5)x-name: ");
 		String[] classifications = { "PUBLIC", "PRIVATE", "CONFIDENTIAL", "iana-token", "x-name" };
@@ -435,27 +387,24 @@ public class Main2 {
 			class_choice = getChoice();
 		}
 		if (class_choice == -2) {
-			// new_event.setClassification("PUBLIC");
 			details.add("CLASS", "PUBLIC");
 		} else {
-			// new_event.setClassification(classifications[class_choice - 1]);
 			details.add("CLASS", classifications[class_choice - 1]);
 		}
 
 		// DESCRIPTION
 		System.out.print("Description: ");
-		// new_event.setDescription(userInput.nextLine());
 		details.add("DESCRIPTION", userInput.nextLine());
 
-		// set comment to calculation from great circle distance don't know how
-		// that will work with the list.
-		// new_event.setComment(gcd calculation from list of events);
-		// System.out.println(answers.toString());
-		// return new_event;
 		
 		return details;
 	}
 
+	/*
+	 * 
+	 * Allows the user to see the GMT timezone of major cities
+	 * 
+	 */
 	private static void displayTimeZone() {
 	
 		System.out.println("=======Timezone (GMT) ======");
@@ -639,6 +588,12 @@ public class Main2 {
 		
 	}
 
+	/*
+	 * isValidTz
+	 * 
+	 * Checks if inputted timezone is correct
+	 * 
+	 */
 	public static boolean isValidTZ(String tzidAnswer) {
 		try{
 
@@ -656,7 +611,7 @@ public class Main2 {
 		}catch (Exception e){
 		return false;
 		}
-		return true;
+		return false;
 	}
 
 	/**
@@ -716,53 +671,5 @@ public class Main2 {
 		}
 		return true;
 	}
-	
-	//when reading in files
-		/**
-		 * createArray
-		 */
-//		public static void createArray(){
-//			String[][] tzArray = new String[87][2]; //87 = number of time zones, 2 = timezone GMT offset & timezone name
-//			String fileName = "timezones.txt"; //file with timezones listed
-//			String currentLine = "";
-//			int count = 0;
-//			
-//			// Receives input from user about the file to be read
-//			try {
-//				// FileReader will read the text file
-//				FileReader fileReader = new FileReader(fileName);
-//			
-//				// Wrap FileReader in BufferedReader
-//				BufferedReader bufferedReader = new BufferedReader(fileReader);
-//				
-//				
-//				// Read file line by line until the end
-//				while((currentLine = bufferedReader.readLine()) != null){ //might change null to END:VCALENDAR
-//					// System.out.println(currentLine); // Used for testing, just prints each line to screen
-//					
-//					// Format of timezones on timezone.txt file: (GMT-1000) Hawaii
-//					// Timezone array [*][0] = GMT offset
-//					// Timezone array [*][1] = timezone name
-//					tzArray[count][0] = currentLine.substring(currentLine.indexOf('(')+4, currentLine.indexOf(')'));
-//					tzArray[count][1] = currentLine.substring(currentLine.indexOf(')')+2);
-//					
-//					// Next line is for testing
-//					// System.out.println(tzArray[count][0] + "\t" + tzArray[count][1]);
-//					
-//					count++;
-//				}
-//			// Close files
-//			bufferedReader.close();
-//			}
-//					
-//			// Outputs error message is fileName is not found
-//			catch(FileNotFoundException ex1){
-//				System.out.println("Unable to open file '" + fileName + "'.");
-//			}
-//			// Outputs error message if fileName cannot be read
-//			catch(IOException ex2){
-//				System.out.println("Error reading file '" + fileName + "'.");
-//			}
-//		}
 
 }
