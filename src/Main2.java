@@ -162,6 +162,8 @@ public class Main2 {
 
 		System.out.println(eventAttrib.getVal("SUMMARY"));
 		cal.addEvent(eventAttrib);
+		cal.sortEvents();
+		cal.calcGCD();
 	}
 
 	public static void listEvents() {
@@ -639,6 +641,12 @@ public class Main2 {
 		
 	}
 
+	/**
+	 * isValidTZ
+	 * 
+	 * @param tzidAnswer a timeZone answer given by the user
+	 * @return true if a valid timezone, false otherwise
+	 */
 	public static boolean isValidTZ(String tzidAnswer) {
 		try{
 
@@ -654,19 +662,18 @@ public class Main2 {
 				return true;
 			}
 		}catch (Exception e){
-		return false;
+			return false;
 		}
-		return true;
+			return true;
 	}
 
 	/**
 	 * isFloat
 	 * 
-	 * Checks if a the given string is a float
+	 * Checks if a the given string is a float.
 	 * 
-	 * @param input
-	 *            a given string
-	 * @return
+	 * @param input - a given string
+	 * @return true if the value is a valid Float, false otherwise
 	 */
 	public static boolean isFloat(String input) {
 		try {
@@ -680,11 +687,10 @@ public class Main2 {
 	/**
 	 * isValidDate
 	 * 
-	 * Check if the date is a valid format
+	 * Check if the date is a valid format.
 	 * 
-	 * @param input
-	 *            a given date string
-	 * @return
+	 * @param input - a given date string
+	 * @return 
 	 */
 	public static boolean isValidDate(String input) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
@@ -702,8 +708,7 @@ public class Main2 {
 	 * 
 	 * Check if the time is a valid format.
 	 * 
-	 * @param input
-	 *            a given time string
+	 * @param input - a given time string
 	 * @return
 	 */
 	public static boolean isValidTime(String input) {
