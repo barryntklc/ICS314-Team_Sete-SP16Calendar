@@ -305,15 +305,15 @@ public class Main2 {
 		// SUMMARY
 		System.out.print("Event Name: ");
 		details.add("SUMMARY", userInput.nextLine());
-
-//		// DTSTART
-//		System.out.print("Start Date (YYYYMMDD): ");
-//		String startDateInput = userInput.nextLine();
-//		while (!isValidDate(startDateInput)) {
-//			System.out.print("Incorrect Date! Please enter in the format YYYYMMDD: ");
-//			startDateInput = userInput.nextLine();
-//		}
-//		
+		
+		// DTSTART
+		System.out.print("Start Date (YYYYMMDD): ");
+		String startDateInput = userInput.nextLine();
+		while (!isValidDate(startDateInput)) {
+			System.out.print("Incorrect Date! Please enter in the format YYYYMMDD: ");
+			startDateInput = userInput.nextLine();
+		}
+		
 		System.out.print("Start Time (HHMMSS): ");
 		String startTimeInput = userInput.nextLine();
 		while (!isValidTime(startTimeInput)) {
@@ -321,24 +321,26 @@ public class Main2 {
 			startTimeInput = userInput.nextLine();
 		}
 		
-//		String dtstart = startDateInput + "T" + startTimeInput;
-//		details.add("DTSTART", dtstart);
-
-//		// DTEND
-//		System.out.print("End Date (YYYYMMDD): ");
-//		String endDateInput = userInput.nextLine();
-//		while (!isValidDate(endDateInput)) {
-//			System.out.print("Incorrect Date! Please enter in the format YYYYMMDD: ");
-//			endDateInput = userInput.nextLine();
-//		}
+		String dtstart = startDateInput + "T" + startTimeInput;
+		details.add("DTSTART", dtstart);
+		
+		// DTEND
+		System.out.print("End Date (YYYYMMDD): ");
+		String endDateInput = userInput.nextLine();
+		while (!isValidDate(endDateInput)) {
+			System.out.print("Incorrect Date! Please enter in the format YYYYMMDD: ");
+			endDateInput = userInput.nextLine();
+		}
+		
 		System.out.print("End Time (HHMMSS): ");
 		String endTimeInput = userInput.nextLine();
 		while (!isValidTime(endTimeInput)) {
 			System.out.print("Incorrect Time! Please enter in the format HHMMSS: ");
 			endTimeInput = userInput.nextLine();
 		}
-//		String dtend = endDateInput + "T" + endTimeInput;
-//		details.add("DTEND", dtend);
+		
+		String dtend = endDateInput + "T" + endTimeInput;
+		details.add("DTEND", dtend);
 		
 		//Timezone Selection
 		
@@ -361,36 +363,6 @@ public class Main2 {
 			//System.out.println("Display name is : " + timezone.getDisplayName());
 			details.add("TZID",timezone.getID());
 		}
-		
-		
-
-		
-		//Renovating Date start and date end after time zone entry. 
-		
-		
-		
-		// DTSTART
-		System.out.print("Start Date (YYYYMMDD): ");
-		String startDateInput = userInput.nextLine();
-		while (!isValidDate(startDateInput)) {
-			System.out.print("Incorrect Date! Please enter in the format YYYYMMDD: ");
-			startDateInput = userInput.nextLine();
-		}
-		
-		
-		String dtstart = startDateInput + "T" + startTimeInput;
-		details.add("DTSTART", dtstart);
-		
-		// DTEND
-		System.out.print("End Date (YYYYMMDD): ");
-		String endDateInput = userInput.nextLine();
-		while (!isValidDate(endDateInput)) {
-			System.out.print("Incorrect Date! Please enter in the format YYYYMMDD: ");
-			endDateInput = userInput.nextLine();
-		}
-		
-		String dtend = endDateInput + "T" + endTimeInput;
-		details.add("DTEND", dtend);
 		
 		// LOCATION
 		System.out.print("Location: ");
@@ -656,7 +628,7 @@ public class Main2 {
 		}catch (Exception e){
 		return false;
 		}
-		return true;
+		return false;
 	}
 
 	/**
