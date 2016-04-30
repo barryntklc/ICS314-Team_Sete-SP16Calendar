@@ -1,10 +1,7 @@
 
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -145,6 +142,8 @@ public class Main2 {
 
 		System.out.println(eventAttrib.getVal("SUMMARY"));
 		cal.addEvent(eventAttrib);
+		cal.sortEvents();
+		cal.calcGCD();
 	}
 
 	public static void listEvents() {
@@ -282,7 +281,19 @@ public class Main2 {
 		// SUMMARY
 		System.out.print("Event Name: ");
 		details.add("SUMMARY", userInput.nextLine());
+<<<<<<< HEAD
 
+=======
+		
+		// DTSTART
+		System.out.print("Start Date (YYYYMMDD): ");
+		String startDateInput = userInput.nextLine();
+		while (!isValidDate(startDateInput)) {
+			System.out.print("Incorrect Date! Please enter in the format YYYYMMDD: ");
+			startDateInput = userInput.nextLine();
+		}
+		
+>>>>>>> origin/master
 		System.out.print("Start Time (HHMMSS): ");
 		String startTimeInput = userInput.nextLine();
 		while (!isValidTime(startTimeInput)) {
@@ -290,13 +301,33 @@ public class Main2 {
 			startTimeInput = userInput.nextLine();
 		}
 		
+<<<<<<< HEAD
 
+=======
+		String dtstart = startDateInput + "T" + startTimeInput;
+		details.add("DTSTART", dtstart);
+		
+		// DTEND
+		System.out.print("End Date (YYYYMMDD): ");
+		String endDateInput = userInput.nextLine();
+		while (!isValidDate(endDateInput)) {
+			System.out.print("Incorrect Date! Please enter in the format YYYYMMDD: ");
+			endDateInput = userInput.nextLine();
+		}
+		
+>>>>>>> origin/master
 		System.out.print("End Time (HHMMSS): ");
 		String endTimeInput = userInput.nextLine();
 		while (!isValidTime(endTimeInput)) {
 			System.out.print("Incorrect Time! Please enter in the format HHMMSS: ");
 			endTimeInput = userInput.nextLine();
 		}
+<<<<<<< HEAD
+=======
+		
+		String dtend = endDateInput + "T" + endTimeInput;
+		details.add("DTEND", dtend);
+>>>>>>> origin/master
 		
 		
 		//Timezone Selection
@@ -304,6 +335,10 @@ public class Main2 {
 		
 		String tzidAnswer = userInput.nextLine();
 		TimeZone timezone = TimeZone.getDefault();
+		while(tzidAnswer.charAt(0)!='Y'&& tzidAnswer.charAt(0)!='y'&&tzidAnswer.charAt(0)!='N'&& tzidAnswer.charAt(0)!='n') {
+			System.out.println("Please enter y or n: ");
+			tzidAnswer = userInput.nextLine();
+		}
 		if(tzidAnswer.charAt(0)=='Y'|| tzidAnswer.charAt(0)=='y'){
 			while(!isValidTZ(tzidAnswer)){
 	
@@ -318,6 +353,7 @@ public class Main2 {
 			timezone.setID("GMT"+tzidFrontForm+":"+tzidBackForm);
 			details.add("TZID",timezone.getID());
 		}
+<<<<<<< HEAD
 		
 		
 		
@@ -339,10 +375,11 @@ public class Main2 {
 		while (!isValidDate(endDateInput)) {
 			System.out.print("Incorrect Date! Please enter in the format YYYYMMDD: ");
 			endDateInput = userInput.nextLine();
+=======
+		else if(tzidAnswer.charAt(0)=='N'|| tzidAnswer.charAt(0)=='n') {
+			details.add("TZID", "GMT-1000");
+>>>>>>> origin/master
 		}
-		
-		String dtend = endDateInput + "T" + endTimeInput;
-		details.add("DTEND", dtend);
 		
 		// LOCATION
 		System.out.print("Location: ");
@@ -395,7 +432,10 @@ public class Main2 {
 		// DESCRIPTION
 		System.out.print("Description: ");
 		details.add("DESCRIPTION", userInput.nextLine());
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/master
 		
 		return details;
 	}
@@ -588,11 +628,19 @@ public class Main2 {
 		
 	}
 
+<<<<<<< HEAD
 	/*
 	 * isValidTz
 	 * 
 	 * Checks if inputted timezone is correct
 	 * 
+=======
+	/**
+	 * isValidTZ
+	 * 
+	 * @param tzidAnswer a timeZone answer given by the user
+	 * @return true if a valid timezone, false otherwise
+>>>>>>> origin/master
 	 */
 	public static boolean isValidTZ(String tzidAnswer) {
 		try{
@@ -608,20 +656,23 @@ public class Main2 {
 		
 				return true;
 			}
-		}catch (Exception e){
-		return false;
+		} catch (Exception e) {
+			return false;
 		}
+<<<<<<< HEAD
 		return false;
+=======
+			return true;
+>>>>>>> origin/master
 	}
 
 	/**
 	 * isFloat
 	 * 
-	 * Checks if a the given string is a float
+	 * Checks if a the given string is a float.
 	 * 
-	 * @param input
-	 *            a given string
-	 * @return
+	 * @param input - a given string
+	 * @return true if the value is a valid Float, false otherwise
 	 */
 	public static boolean isFloat(String input) {
 		try {
@@ -635,11 +686,10 @@ public class Main2 {
 	/**
 	 * isValidDate
 	 * 
-	 * Check if the date is a valid format
+	 * Check if the date is a valid format.
 	 * 
-	 * @param input
-	 *            a given date string
-	 * @return
+	 * @param input - a given date string
+	 * @return 
 	 */
 	public static boolean isValidDate(String input) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
@@ -657,8 +707,7 @@ public class Main2 {
 	 * 
 	 * Check if the time is a valid format.
 	 * 
-	 * @param input
-	 *            a given time string
+	 * @param input - a given time string
 	 * @return
 	 */
 	public static boolean isValidTime(String input) {
@@ -671,5 +720,8 @@ public class Main2 {
 		}
 		return true;
 	}
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/master
 }

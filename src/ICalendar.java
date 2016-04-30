@@ -1,9 +1,5 @@
 import java.util.ArrayList;
 import java.util.Collections;
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 
 /**
  * ICalendar
@@ -55,7 +51,8 @@ public class ICalendar {
 
 	/**
 	 * setName
-	 * @param name
+	 * 
+	 * @param name - a name for the calendar
 	 */
 	public void setName(String name) {
 		attrib.setVal("X-WR-CALNAME", name);
@@ -63,6 +60,8 @@ public class ICalendar {
 
 	/**
 	 * sortEvents
+	 * 
+	 * Sorts the array of events stored.
 	 */
 	public void sortEvents() {
 		Collections.sort(events);
@@ -70,7 +69,8 @@ public class ICalendar {
 
 	/**
 	 * size
-	 * @return
+	 * 
+	 * @return the size of the array of events stored.
 	 */
 	public int size() {
 		return events.size();
@@ -109,11 +109,11 @@ public class ICalendar {
 					
 					else {
 						String geo1[] = events.get(i).getVal("GEO").split(";");
-						double lat1 = Double.parseDouble(geo1[0]);
-						double long1 = Double.parseDouble(geo1[1]);
+						float lat1 = Float.parseFloat(geo1[0]);
+						double long1 = Float.parseFloat(geo1[1]);
 						String geo2[] = events.get(i + 1).getVal("GEO").split(";");
-						double lat2 = Double.parseDouble(geo2[0]);
-						double long2 = Double.parseDouble(geo2[1]);
+						double lat2 = Float.parseFloat(geo2[0]);
+						double long2 = Float.parseFloat(geo2[1]);
 	
 						float dist, km;
 						double earthRadius = 3958.75; // miles (or 6371.0
