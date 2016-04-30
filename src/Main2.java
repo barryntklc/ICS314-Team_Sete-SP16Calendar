@@ -348,6 +348,10 @@ public class Main2 {
 		
 		String tzidAnswer = userInput.nextLine();
 		TimeZone timezone = TimeZone.getDefault();
+		while(tzidAnswer.charAt(0)!='Y'&& tzidAnswer.charAt(0)!='y'&&tzidAnswer.charAt(0)!='N'&& tzidAnswer.charAt(0)!='n') {
+			System.out.println("Please enter y or n: ");
+			tzidAnswer = userInput.nextLine();
+		}
 		if(tzidAnswer.charAt(0)=='Y'|| tzidAnswer.charAt(0)=='y'){
 			while(!isValidTZ(tzidAnswer)){
 	
@@ -362,6 +366,9 @@ public class Main2 {
 			timezone.setID("GMT"+tzidFrontForm+":"+tzidBackForm);
 			//System.out.println("Display name is : " + timezone.getDisplayName());
 			details.add("TZID",timezone.getID());
+		}
+		else if(tzidAnswer.charAt(0)=='N'|| tzidAnswer.charAt(0)=='n') {
+			details.add("TZID", "GMT-1000");
 		}
 		
 		// LOCATION
@@ -418,12 +425,6 @@ public class Main2 {
 		System.out.print("Description: ");
 		// new_event.setDescription(userInput.nextLine());
 		details.add("DESCRIPTION", userInput.nextLine());
-
-		// set comment to calculation from great circle distance don't know how
-		// that will work with the list.
-		// new_event.setComment(gcd calculation from list of events);
-		// System.out.println(answers.toString());
-		// return new_event;
 		
 		return details;
 	}
